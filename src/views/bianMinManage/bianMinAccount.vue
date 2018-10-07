@@ -2,43 +2,43 @@
     <div class="app-container">
         <el-form ref="form" :inline="true">
             <el-form-item label="账号ID">
-                <el-input placeholder="请输入账号ID"></el-input>
+                <el-input placeholder="请输入账号ID" v-model="searchForm.zh_id"></el-input>
             </el-form-item>
             <el-form-item label="户名">
-                <el-input placeholder="请输入户名"></el-input>
+                <el-input placeholder="请输入户名"  v-model="searchForm.name"></el-input>
             </el-form-item>
             <el-form-item label="身份证">
-                <el-input placeholder="请输入身份证"></el-input>
+                <el-input placeholder="请输入身份证"  v-model="searchForm.identity_num"></el-input>
             </el-form-item>
             <el-form-item label="手机号">
-                <el-input placeholder="请输入手机号"></el-input>
+                <el-input placeholder="请输入手机号"  v-model="searchForm.phone"></el-input>
             </el-form-item>
             <el-form-item label="账号">
-                <el-input placeholder="请输入账号"></el-input>
+                <el-input placeholder="请输入账号"  v-model="searchForm.account"></el-input>
             </el-form-item>
             <el-form-item label="开户行">
-                <el-input placeholder="请输入开户行"></el-input>
+                <el-input placeholder="请输入开户行"  v-model="searchForm.bank"></el-input>
             </el-form-item>
             <el-form-item label="余额">
                 <el-col :span="11">
-                    <el-input placeholder="请输入余额最小值"></el-input>
+                    <el-input placeholder="请输入余额最小值"  v-model="searchForm.balance_gt"></el-input>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">
-                    <el-input placeholder="请输入余额最大值"></el-input>
+                    <el-input placeholder="请输入余额最大值"  v-model="searchForm.balance_lt"></el-input>
                 </el-col>
             </el-form-item>
             <el-form-item label="额度">
                 <el-col :span="11">
-                    <el-input placeholder="请输入额度最小值"></el-input>
+                    <el-input placeholder="请输入额度最小值"  v-model="searchForm.day_limit_gt"></el-input>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">
-                    <el-input placeholder="请输入额度最大值"></el-input>
+                    <el-input placeholder="请输入额度最大值"  v-model="searchForm.day_limit_lt"></el-input>
                 </el-col>
             </el-form-item>
             <el-form-item label="类型">
-                <el-select clearable placeholder="请选择">
+                <el-select clearable placeholder="请选择"  v-model="searchForm.account_type">
                     <el-option label="全部" value=""></el-option>
                     <el-option label="银联卡" value="1"></el-option>
                     <el-option label="支付宝" value="2"></el-option>
@@ -47,17 +47,17 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select clearable placeholder="请选择">
+                <el-select clearable placeholder="请选择"  v-model="searchForm.status">
                     <el-option label="全部" value=""></el-option>
-                    <el-option label="停用" value="1"></el-option>
-                    <el-option label="使用中" value="2"></el-option>
+                    <el-option label="停用" value="0"></el-option>
+                    <el-option label="使用中" value="1"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="录入时间">
-                <el-date-picker type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+                <el-date-picker  v-model="searchForm.create_time" type="datetimerange" value-format="timestamp" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
             </el-form-item>
             <el-form-item>
-                <!-- <el-button type="primary" class="el-icon-search">搜索</el-button> -->
+                <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
                 <el-button type="primary" class="el-icon-plus" @click="addAccount">添加账户</el-button>
                 <!-- <el-button type="primary" class="el-icon-plus">批量导入</el-button> -->
             </el-form-item>
@@ -83,7 +83,7 @@
             <el-table-column label="密码" prop="account_pwd"></el-table-column>
             <el-table-column label="收款码" prop="qr_code">
                 <template slot-scope="scope">
-                    <img v-show="scope.row.qr_code" :src="scope.row.qr_code" alt="" width="100" height="100">
+                    <zoom-img :src="scope.row.qr_code"></zoom-img>
                 </template>
             </el-table-column>
             <el-table-column label="额度" prop="day_limit">
@@ -98,13 +98,13 @@
             </el-table-column>
             <el-table-column label="状态" prop="status">
                 <template slot-scope="scope">
-                    <el-tag :type="scope.row.status==1 ? 'danger' : 'success'">{{ scope.row.status | accontStatus }}</el-tag>
+                    <el-tag :type="scope.row.status==1 ? 'success' : 'danger'">{{ scope.row.status | accontStatus }}</el-tag>
                 </template>
             </el-table-column>
             <el-table-column label="操作" width="250px">
                 <template slot-scope="scope">
                     <el-button type="primary" size="small" @click="editAccount(scope.row)">编辑</el-button>
-                    <!-- <el-button type="warning" size="small">启用</el-button> -->
+                    <el-button :type="scope.row.status==1 ? 'danger' : 'success'" size="small" @click="changeStatus(scope.row)">{{ scope.row.status==1 ? '停用' : '启用' }}</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -120,10 +120,12 @@
 <script>
 import bianMinManage from '@/api/bianMinManage'
 import addAccountDetail from './components/addAccountDetail'
+import zoomImg from '@/components/zoomImg'
 export default {
     name: 'bianMinAccount',
     components: {
-        addAccountDetail
+        addAccountDetail,
+        zoomImg
     },
     data() {
         return {
@@ -134,7 +136,24 @@ export default {
             searchForm: {
                 page: 1,
                 limit: 10,
-                dataCount: 0
+                dataCount: 0,
+                zh_id: '',
+                name: '',
+                identity_num: '',
+                phone: '',
+                account_type: '',
+                account: '',
+                balance_gt: '',
+                balance_lt: '',
+                bank: '',
+                account_pwd: '',
+                qr_code: '',
+                day_limit_gt: '',
+                day_limit_lt: '',
+                create_time: '',
+                create_time_gt: '',
+                create_time_lt: '',
+                status: ''
             },
         }
     },
@@ -156,9 +175,9 @@ export default {
         },
         accontStatus(value) {
             switch(value) {
-                case 1: 
+                case 0: 
                     return '停用'
-                case 2: 
+                case 1: 
                     return '使用中'
             }
         }
@@ -176,6 +195,17 @@ export default {
             this.searchForm.page = value
             this.getDataList()
         },
+        searchData() {
+            try {
+                if(this.searchForm.create_time != '') {
+                    this.searchForm.create_time_gt = parseInt(this.searchForm.create_time[0])/1000
+                    this.searchForm.create_time_lt = parseInt(this.searchForm.create_time[1])/1000
+                }
+            } catch (error) {
+                
+            }
+            this.getDataList()
+        },
         addAccount() {
             this.visibleAddAccountFlag = true
             this.isEdit = false
@@ -189,6 +219,15 @@ export default {
         },
         changeFlag(value) {
             this.visibleAddAccountFlag = value
+        },
+        changeStatus(data) {
+            let status = data.status == 1 ? 0 : 1
+            bianMinManage.editBianMinAccounts({ id: data.id, status: status }).then(res => {
+                if(res.code == 200) {
+                    this.$message.success('更改状态成功！')
+                    this.getDataList()
+                }
+            })
         }
     }
 }

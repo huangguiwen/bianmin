@@ -33,7 +33,7 @@
                 </el-select>
             </el-form-item>
              <el-form-item label="录入时间">
-                <el-date-picker v-model="searchForm.time" value-format="timestamp" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+                <el-date-picker v-model="searchForm.create_time" value-format="timestamp" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
@@ -62,10 +62,9 @@
             </el-table-column>
             <el-table-column label="操作" prop="title" width="350px">
                 <template slot-scope="scope">
-                    <!-- <el-button size="small">查看</el-button> -->
+                    <el-button size="small" @click="checkDetail(scope.row.id)">查看</el-button>
                     <el-button type="primary" size="small" @click="editBianMin(scope.row.id)">编辑</el-button>
                     <el-button type="warning" size="small" @click="addAccount">添加账号</el-button>
-                    <!-- <el-button type="danger" size="small">删除</el-button> -->
                 </template>
             </el-table-column>
         </el-table>
@@ -103,9 +102,9 @@ export default {
                 age_gt: '',
                 age_lt: '',
                 sex: '',
-                time: '',
-                time_lt: '',
-                time_gt: ''
+                create_time: '',
+                create_time_lt: '',
+                create_time_gt: ''
             }
         }
     },
@@ -141,13 +140,18 @@ export default {
         },
         searchData() {
             try {
-                this.searchForm.time_lt = this.searchForm.time[0]
-                this.searchForm.time_gt = this.searchForm.time[1]
+                if(this.searchForm.create_time != '') {
+                    this.searchForm.create_time_gt = parseInt(this.searchForm.create_time[0])/1000
+                    this.searchForm.create_time_lt = parseInt(this.searchForm.create_time[1])/1000
+                }
             } catch (error) {
                 
             }
             this.getDataList()
             
+        },
+        checkDetail(id) {
+            this.$router.push({ name: 'bianMinInfoDetail', query: { id: id } })
         }
     }
 }

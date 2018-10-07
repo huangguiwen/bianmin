@@ -23,6 +23,12 @@ export default {
             hidden: true,
             component: () => import('@/views/bianMinManage/addBianMinInfo'),
             meta: { title: '添加边民信息', icon: 'tree' }
+        },{   
+            path: 'bianMinInfoDetail',
+            name: 'bianMinInfoDetail',
+            hidden: true,
+            component: () => import('@/views/bianMinManage/bianMinInfoDetail'),
+            meta: { title: '边民信息详情', icon: 'tree' }
         }
     ]
 }

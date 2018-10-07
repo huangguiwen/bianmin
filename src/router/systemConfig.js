@@ -9,7 +9,7 @@ export default {
         {
             path: 'baseSetting',
             name: 'baseSetting',
-            hidden: true,
+            hidden: false,
             component: () => import('@/views/systemConfig/baseSetting'),
             meta: { title: '基础设置', icon: 'tree' }
         },

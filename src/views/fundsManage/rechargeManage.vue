@@ -2,43 +2,43 @@
     <div class="app-container">
         <el-form ref="form" :inline="true">
             <el-form-item label="订单号">
-                <el-input placeholder="请输入订单号"></el-input>
+                <el-input placeholder="请输入订单号" v-model="searchForm.cz_id"></el-input>
             </el-form-item>
             <el-form-item label="商户订单号">
-                <el-input placeholder="请输入商户订单号"></el-input>
+                <el-input placeholder="请输入商户订单号" v-model="searchForm.shop_order_id"></el-input>
             </el-form-item>
             <el-form-item label="商户名称">
-                <el-input placeholder="请输入商户名称"></el-input>
+                <el-input placeholder="请输入商户名称" v-model="searchForm.shop_name"></el-input>
             </el-form-item>
             <el-form-item label="户名">
-                <el-input placeholder="请输入户名"></el-input>
+                <el-input placeholder="请输入户名" v-model="searchForm.account_name"></el-input>
             </el-form-item>
             <el-form-item label="收款账号">
-                <el-input placeholder="请输入收款账号"></el-input>
+                <el-input placeholder="请输入收款账号" v-model="searchForm.account"></el-input>
             </el-form-item>
             <el-form-item label="充值金额">
                 <el-col :span="11">
-                    <el-input placeholder="请输入金额最小值"></el-input>
+                    <el-input placeholder="请输入金额最小值" v-model="searchForm.total_fee_gt"></el-input>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">
-                    <el-input placeholder="请输入金额最大值"></el-input>
+                    <el-input placeholder="请输入金额最大值" v-model="searchForm.total_fee_lt"></el-input>
                 </el-col>
             </el-form-item>
             <el-form-item label="收取手续费">
                 <el-col :span="11">
-                    <el-input placeholder="请输入手续费最小值"></el-input>
+                    <el-input placeholder="请输入手续费最小值" v-model="searchForm.service_fee_gt"></el-input>
                 </el-col>
                 <el-col class="line" :span="2">-</el-col>
                 <el-col :span="11">
-                    <el-input placeholder="请输入手续费最大值"></el-input>
+                    <el-input placeholder="请输入手续费最大值" v-model="searchForm.service_fee_lt"></el-input>
                 </el-col>
             </el-form-item>
             <el-form-item label="录入时间">
-                <el-date-picker type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+                <el-date-picker v-model="searchForm.create_time" value-format="timestamp" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="类型">
-                <el-select clearable placeholder="请选择">
+                <el-select clearable placeholder="请选择" v-model="searchForm.account_type">
                     <el-option label="全部" value=""></el-option>
                     <el-option label="银联卡" value="1"></el-option>
                     <el-option label="支付宝" value="2"></el-option>
@@ -47,7 +47,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label="状态">
-                <el-select clearable placeholder="请选择">
+                <el-select clearable placeholder="请选择" v-model="searchForm.status">
                     <el-option label="全部" value=""></el-option>
                     <el-option label="待审核" value="0"></el-option>
                     <el-option label="确认到账" value="1"></el-option>
@@ -55,7 +55,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <!-- <el-button type="primary" class="el-icon-search">搜索</el-button> -->
+                <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
             </el-form-item>
         </el-form>
         <el-table :data="dataList">
@@ -186,7 +186,21 @@ export default {
             searchForm: {
                 page: 1,
                 limit: 10,
-                dataCount: 0
+                dataCount: 0,
+                cz_id: '',
+                shop_order_id: '',
+                shop_name: '',
+                account_name: '',
+                account: '',
+                total_fee_gt: '',
+                total_fee_lt: '',
+                service_fee_gt: '',
+                service_fee_lt: '',
+                create_time: '',
+                create_time_gt: '',
+                create_time_lt: '',
+                status: '',
+                account_type: ''
             },
             auditForm: {},
             rules: {
@@ -240,6 +254,18 @@ export default {
         },
         handleCurrentChange(value) {
             this.searchForm.page = value
+            this.getDataList()
+        },
+        searchData() {
+            try {
+                if(this.searchForm.create_time != '') {
+                    this.searchForm.create_time_gt = parseInt(this.searchForm.create_time[0])/1000
+                    this.searchForm.create_time_lt = parseInt(this.searchForm.create_time[1])/1000
+                }
+
+            } catch (error) {
+                
+            }
             this.getDataList()
         },
         audit(row) {
