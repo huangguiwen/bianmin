@@ -1,7 +1,7 @@
 <template>
     <el-menu class="navbar" mode="horizontal">
-        <hamburger class="hamburger-container" v-show="false" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
-        <breadcrumb v-show="false"></breadcrumb>
+        <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened"></hamburger>
+        <!-- <breadcrumb></breadcrumb> -->
         <!-- <el-dropdown class="avatar-container" trigger="click">
             <div class="avatar-wrapper">
                 <span>{{ userInfo.realname }}</span>
@@ -76,7 +76,7 @@ export default {
         line-height: 58px;
         height: 50px;
         float: left;
-        padding: 0 10px;
+        padding: 0 0 0 20px;
     }
     .screenfull {
         position: absolute;

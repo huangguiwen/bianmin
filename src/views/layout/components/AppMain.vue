@@ -1,11 +1,11 @@
 <template>
     <section class="app-main">
         <transition name="fade" mode="out-in">
-        <!-- <router-view :key="key"></router-view> -->
-        <div>
-            <p class="title-bar" v-show="$router.currentRoute.meta.title!=='首页'">{{$router.currentRoute.meta.title}}</p>
-            <router-view></router-view>
-        </div>
+            <!-- <router-view :key="key"></router-view> -->
+            <div>
+                <p class="title-bar" v-show="$router.currentRoute.meta.title!=='首页'">{{$router.currentRoute.meta.title}}</p>
+                <router-view></router-view>
+            </div>
         </transition>
     </section>
 </template>

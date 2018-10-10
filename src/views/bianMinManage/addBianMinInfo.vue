@@ -185,7 +185,7 @@ export default {
         authorizationChange(response, file, fileList) {
             this.ruleForm.authorization = fileList.map(item => {
                 return {
-                    url: `${this.baseApi}/${file.data}?uid=${item.uid}&name=${item.name}`,
+                    url: `${this.baseApi}/${file.response.data}?uid=${item.uid}&name=${item.name}`,
                     uid: item.uid,
                     name: item.name
                 }
@@ -194,7 +194,7 @@ export default {
         attachmentChange(response, file, fileList) {
             this.ruleForm.attachment = fileList.map(item => {
                 return {
-                    url: `${this.baseApi}/${file.data}?uid=${item.uid}&name=${item.name}`,
+                    url: `${this.baseApi}/${file.response.data}?uid=${item.uid}&name=${item.name}`,
                     uid: item.uid,
                     name: item.name
                 }

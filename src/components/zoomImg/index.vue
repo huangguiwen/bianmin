@@ -1,7 +1,7 @@
 <!--可放大查看的image-->
 <template>
     <div @click="zoomIn=!zoomIn">
-        <img :src="src" v-show="src" :style="'max-width:' + maxWidth + 'px;max-height:' + maxHeight+'px;'">
+        <img :src="src" v-show="src" :style="'max-width:' + maxWidth + 'px;max-height:' + maxHeight+'px; cursor: pointer;'">
         <transition name="slide-fade">
             <div v-if="zoomIn" class="zoom-wrap">
                 <div>

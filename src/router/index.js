@@ -10,6 +10,7 @@ Vue.use(Router)
 import Layout from '../views/layout/Layout'
 import login from './login'
 import bianMinManage from './bianMinManage'
+import merchantManage from './merchantManage'
 import systemConfig from './systemConfig'
 import fundsManage from './fundsManage'
 
@@ -44,6 +45,7 @@ export const constantRouterMap = [
   { path: '*', redirect: '/404', hidden: true },
   login,
   bianMinManage,
+  merchantManage,
   fundsManage,
   systemConfig,
 

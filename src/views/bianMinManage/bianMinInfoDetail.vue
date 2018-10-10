@@ -41,10 +41,12 @@
                 <div class="item">
                     <span class="text">授权书附件: </span>
                     <span>{{ tabsList.authorization | getFileName }}</span>
+                    <el-button v-show="tabsList.authorization" @click="downloadFile(tabsList.authorization)" type="primary" size="mini" style="margin-left: 20px;">下载</el-button>
                 </div>
                 <div class="item">
                     <span class="text">其它附件: </span>
                     <span>{{ tabsList.attachment | getFileName }}</span>
+                    <el-button v-show="tabsList.attachment" @click="downloadFile(tabsList.attachment)" type="primary" size="mini" style="margin-left: 20px;">下载</el-button>
                 </div>
                 <div class="item">
                     <span class="text">备注: </span>
@@ -262,6 +264,16 @@ export default {
             }
             this.getDataList()
         },
+        downloadFile(file) {
+            fetch(file).then(res => res.blob().then(blob => {
+                let a = document.createElement('a');
+                let url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = file.split('&name=')[1];
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }))
+        }
     }
 }
 </script>
