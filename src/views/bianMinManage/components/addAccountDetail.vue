@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <!-- 添加账户 -->
-        <el-dialog title="添加账户" :visible.sync="visibleAddAccountFlag" width="30%">
+        <el-dialog title="添加账户" :visible.sync="addAccountFlag" width="30%">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px">
                 <el-form-item label="身份证" required>
                     <el-select v-model="searchIdentity" filterable remote reserve-keyword placeholder="请输入关键词" :remote-method="remoteMethod" :loading="loading">
@@ -82,6 +82,7 @@ import bianMinManage from '@/api/bianMinManage'
 export default {
     data() {
         return {
+            addAccountFlag: false,
             uploadPath: process.env.UPLOAD_PATH,
             baseApi: process.env.BASE_API,
             loading: false,
@@ -141,6 +142,12 @@ export default {
         }
     },
     watch: {
+        visibleAddAccountFlag(value) {
+            this.addAccountFlag = value
+        },
+        addAccountFlag(value) {
+            this.$emit('changeFlag', value)
+        },
         searchIdentity(value) {
             let selectedBainMin = this.bainMinList.filter(item => {
                 return item.value == value
@@ -182,7 +189,7 @@ export default {
         }
     },
     methods: {
-        changeVisibleAddAccountFlag () {
+        changeVisibleAddAccountFlag() {
             this.$emit('changeFlag', false)
         },
         handleAccountTypeChange() {

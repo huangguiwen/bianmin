@@ -26,8 +26,29 @@ function submitCheckMessage(data) {
         data: data
     })
 }
+
+// 编辑商户信息
+function editMerchant(data) {
+    return request({
+        url: '/admin/shops/edit',
+        method: 'post',
+        data: data
+    })
+}
+
+// 修改商户状态
+function changeStatus(data) {
+    return request({
+        url: '/admin/shops/updateData',
+        method: 'post',
+        data: data
+    })
+}
+
 export default {
     getMerchantList,
     getCheckMessage,
-    submitCheckMessage
+    submitCheckMessage,
+    editMerchant,
+    changeStatus
 }

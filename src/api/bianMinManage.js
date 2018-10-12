@@ -56,6 +56,15 @@ function editBianMinAccounts(data) {
     })
 }
 
+// 商户账号明细
+function getAccountDetail(data) {
+    return request({
+        url: '/admin/capitallogs/',
+        method: 'get',
+        data: data
+    })
+}
+
 
 export default {
     getBianMin,
@@ -63,5 +72,6 @@ export default {
     editBianMin,
     getBianMinAccounts,
     addBianMinAccounts,
-    editBianMinAccounts
+    editBianMinAccounts,
+    getAccountDetail
 }

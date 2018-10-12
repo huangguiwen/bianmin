@@ -120,10 +120,10 @@
             </el-table-column>
             <el-table-column label="操作" prop="title" width="350px">
                 <template slot-scope="scope">
-                    <el-button size="small">查看</el-button>
-                    <el-button size="small" type="primary" v-show="scope.row.status != -1">账户明细</el-button>
-                    <el-button size="small" type="success">编辑</el-button>
-                    <el-button size="small" type="warning" v-show="scope.row.status == -2 || scope.row.status == 1">{{ scope.row.status == -2 ? '停用' : '启用' }}</el-button>
+                    <el-button size="small" @click="checkDetail(scope.row.id)">查看</el-button>
+                    <el-button size="small" type="primary" v-show="scope.row.status != -1" @click="accountDetail(scope.row.id)">账户明细</el-button>
+                    <el-button size="small" type="success" @click="showEditFlag(scope.row.id)">编辑</el-button>
+                    <el-button size="small" type="warning" v-show="scope.row.status == -2 || scope.row.status == 1" @click="changeStatus(scope.row)">{{ scope.row.status == 1 ? '停用' : '启用' }}</el-button>
                     <el-button type="primary" size="small" v-show="scope.row.status == 0" @click="showCheckFlag(scope.row.id)">审核</el-button>
                 </template>
             </el-table-column>
@@ -132,21 +132,27 @@
         <el-pagination @current-change="handleCurrentChange" :current-page.sync="searchForm.page" :page-size="searchForm.limit" 
             :total="searchForm.dataCount" layout="total, prev, pager, next, jumper"></el-pagination>
 
-        <check-merchant :checkDialog="checkDialog" :id="id" @dialogFlag="dialogFlag"></check-merchant>
+        <!-- 审核组件 -->
+        <check-merchant :checkDialog="checkDialog" :id="id" @checkDialogFlag="checkDialogFlag"></check-merchant>
+        <!-- 编辑组件 -->
+        <edit-merchant :editDialog="editDialog" :id="id" @editDialogFlag="editDialogFlag"></edit-merchant>
     </div>
 </template>
 
 <script>
 import merchantManage from '@/api/merchantManage'
 import checkMerchant from './components/checkMerchant'
+import editMerchant from './components/editMerchant'
 export default {
     name: 'merchantInfo',
     components: {
-        checkMerchant
+        checkMerchant,
+        editMerchant
     },
     data() {
         return {
             checkDialog: false,
+            editDialog: false,
             id: 0,
             dataList: [],
             searchForm: {
@@ -197,6 +203,7 @@ export default {
            merchantManage.getMerchantList(this.searchForm).then(res => {
                if(res.code == 200) {
                    this.dataList = res.data.list
+                   this.searchForm.dataCount = res.data.dataCount
                }
            })
         },
@@ -219,9 +226,31 @@ export default {
             this.id = id
             this.checkDialog = true
         },
-        dialogFlag(value) {
+        showEditFlag(id) {
+            this.id = id
+            this.editDialog = true
+        },
+        checkDialogFlag(value) {
             this.checkDialog = value
             this.getDataList()
+        },
+        editDialogFlag(value) {
+            this.editDialog = value
+            this.getDataList()
+        },
+        changeStatus(row) {
+            merchantManage.changeStatus({id: row.id, status: row.status == 1 ? -2 : 1 }).then(res => {
+                if(res.code == 200) {
+                    this.$message.success('修改成功！')
+                    this.getDataList()
+                }
+            })
+        },
+        checkDetail(id) {
+            this.$router.push({ name: 'merchantDetail', query: { id: id } })
+        },
+        accountDetail(id) {
+            this.$router.push({ name: 'shopAccountDetail', query: { id: id } })
         }
     }
 }

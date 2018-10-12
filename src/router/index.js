@@ -11,8 +11,9 @@ import Layout from '../views/layout/Layout'
 import login from './login'
 import bianMinManage from './bianMinManage'
 import merchantManage from './merchantManage'
-import systemConfig from './systemConfig'
 import fundsManage from './fundsManage'
+import systemConfig from './systemConfig'
+import operationManage from './operationManage'
 
 /**
 * hidden: true                   if `hidden:true` will not show in the sidebar(default is false)
@@ -47,8 +48,8 @@ export const constantRouterMap = [
   bianMinManage,
   merchantManage,
   fundsManage,
+  operationManage,
   systemConfig,
-
 ]
 
 

@@ -30,6 +30,7 @@ export default {
         value() {
             if(this.value.length != 0) {
                 let valueArray = this.value.split('/')
+                console.log(valueArray)
                 this.selectedOptions = [
                     TextToCode[valueArray[0]].code,
                     TextToCode[valueArray[0]][valueArray[1]].code, 

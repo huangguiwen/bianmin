@@ -56,6 +56,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
+                <el-button type="primary" class="el-icon-plus" @click="addRecharge">添加充值</el-button>
             </el-form-item>
         </el-form>
         <el-table :data="dataList">
@@ -101,7 +102,7 @@
             </el-table-column>
             <el-table-column label="操作" prop="title" width="150px">
                 <template slot-scope="scope">
-                    <!-- <el-button size="small">查看</el-button> -->
+                    <el-button size="small" @click="checkDetail">查看</el-button>
                     <el-button type="primary" size="small" @click="audit(scope.row)" v-if="scope.row.status==0">审核</el-button>
                     <el-button type="success" size="small" @click="edit(scope.row)" v-else>修改</el-button>
                 </template>
@@ -283,6 +284,12 @@ export default {
             if(this.$refs.auditForm) {
                 this.$refs.auditForm.resetField()
             }
+        },
+        checkDetail() {
+            this.$router.push({ name: 'rechargeCheckDetail' })
+        },
+        addRecharge() {
+            this.$router.push({ name: 'addRechargeOrder' })
         },
         auditSubmit() {
             this.$refs.auditForm.validate(async (valid) => {

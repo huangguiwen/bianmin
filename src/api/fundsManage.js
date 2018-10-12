@@ -18,7 +18,26 @@ function auditRecharge(data) {
     })
 }
 
+// 获取提现列表
+function getWithdrawList(data) {
+    return request({
+        url: '/admin/deposits',
+        method: 'get',
+        params: data
+    })
+}
+
+// 提现审核或修改
+function auditWithdraw(data) {
+    return request({
+        url: '/admin/deposits/updatedata',
+        method: 'post',
+        data: data
+    })
+}
 export default {
     getRechargeList,
-    auditRecharge
+    auditRecharge,
+    getWithdrawList,
+    auditWithdraw
 }

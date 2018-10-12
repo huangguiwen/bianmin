@@ -13,31 +13,26 @@
                 <span class="text">手机号：</span>
                 <span>{{ dataList.phone }}</span>
             </div>
-            <div class="item">
-                <span class="text">商户名称：</span>
-                <span>{{ dataList.shop_name }}</span>
-            </div>
-            <div class="item">
-                <span class="text">联系人：</span>
-                <span>{{ dataList.contact }}</span>
-            </div>
-            <div class="item">
-                <span class="text">联系电话：</span>
-                <span>{{ dataList.tel }}</span>
-            </div>
-            <div class="item" style="border-bottom: 1px solid #ccc;">
-                <span class="text">地址：</span>
-                <span>{{ dataList.address }}</span>
-            </div>
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="form" label-width="140px">
-                <el-form-item label="审核结果:" prop="checkResult">
-                    <el-radio v-model="ruleForm.checkResult" :label="1">通过注册</el-radio>
-                    <el-radio v-model="ruleForm.checkResult" :label="-1">拒绝注册</el-radio>
+                <el-form-item label="商户名称：" prop="shop_name">
+                    <el-input v-model="ruleForm.shop_name"></el-input>
+                </el-form-item>
+                <el-form-item label="联系人：" prop="contact">
+                    <el-input v-model="ruleForm.contact"></el-input>
+                </el-form-item>
+                <el-form-item label="联系电话：" prop="tel">
+                    <el-input v-model="ruleForm.tel"></el-input>
+                </el-form-item>
+                <el-form-item label="地址：" prop="firstAddress">
+                    <select-area v-model="ruleForm.firstAddress"></select-area>
+                </el-form-item>
+                <el-form-item label="" prop="secondAddress">
+                    <el-input type="textarea" v-model="ruleForm.secondAddress"></el-input>
                 </el-form-item>
                 <el-form-item label="每天额度:" prop="shop_day_limit">
                     <el-input v-model="ruleForm.shop_day_limit"></el-input>
                 </el-form-item>
-                <el-form-item label="银联卡充值手续费:" required v-if="ruleForm.checkResult == 1">
+                <el-form-item label="银联卡充值手续费:" required>
                     <el-col :span="8">
                         <el-form-item  prop="cz_service_fee_per1">
                             <el-input type="number" max="100" v-model="ruleForm.cz_service_fee_per1">
@@ -54,7 +49,7 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="支付宝充值手续费:" required v-if="ruleForm.checkResult == 1">
+                <el-form-item label="支付宝充值手续费:" required>
                     <el-col :span="8">
                         <el-form-item  prop="cz_service_fee_per2">
                             <el-input type="number" max="100" v-model="ruleForm.cz_service_fee_per2">
@@ -71,7 +66,7 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="微信充值手续费:" required v-if="ruleForm.checkResult == 1">
+                <el-form-item label="微信充值手续费:" required>
                     <el-col :span="8">
                         <el-form-item  prop="cz_service_fee_per3">
                             <el-input type="number" max="100" v-model="ruleForm.cz_service_fee_per3">
@@ -88,7 +83,7 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="Q码充值手续费:" required v-if="ruleForm.checkResult == 1">
+                <el-form-item label="Q码充值手续费:" required>
                     <el-col :span="8">
                         <el-form-item  prop="cz_service_fee_per4">
                             <el-input type="number" max="100" v-model="ruleForm.cz_service_fee_per4">
@@ -105,7 +100,7 @@
                         </el-form-item>
                     </el-col>
                 </el-form-item>
-                <el-form-item label="银联卡提现手续费:" required v-if="ruleForm.checkResult == 1">
+                <el-form-item label="银联卡提现手续费:" required>
                     <el-col :span="8">
                         <el-form-item  prop="tx_service_fee_per">
                             <el-input type="number" max="100" v-model="ruleForm.tx_service_fee_per">
@@ -136,14 +131,21 @@
 
 <script>
 import merchantManage from '@/api/merchantManage'
+import selectArea from '@/components/selectArea'
 export default {
+    components: {
+        selectArea
+    },
     data() {
         return {
             dataList: {},
-            checkResult: 1,
             shop_day_limit: '',
             ruleForm: {
-                checkResult: 1,
+                shop_name: '',
+                contact: '',
+                tel: '',
+                firstAddress: '',
+                secondAddress: '',
                 note: '',
                 cz_service_fee_per1: '',
                 cz_service_fee1: '',
@@ -157,8 +159,20 @@ export default {
                 tx_service_fee: '',
             },
             rules: {
-                checkResult: [
-                    { required: true, message: '请选择审核结果', trigger: 'change' }
+                shop_name: [
+                    { required: true, message: '请输入商户名称', trigger: 'blur' }
+                ],
+                contact: [
+                    { required: true, message: '请输入联系人', trigger: 'blur' }
+                ],
+                tel: [
+                    { required: true, message: '请输入联系电话', trigger: 'blur' }
+                ],
+                firstAddress: [
+                    { required: true, message: '请选择省市区', trigger: 'change' }
+                ],
+                secondAddress: [
+                    { required: true, message: '请输入地址', trigger: 'blur' }
                 ],
                 note: [
                     { required: true, message: '请输入审核意见', trigger: 'blur' }
@@ -200,7 +214,7 @@ export default {
         }
     },
     props: {
-        checkDialog: {
+        editDialog: {
             type: Boolean,
             default: false
         },
@@ -212,9 +226,14 @@ export default {
     watch: {
         async id(value) {
             await this.getDataList()
-            
-            this.ruleForm =  {
-                checkResult: 1,
+            let addressArray = this.dataList.address.split(' ')
+            Object.assign(this.ruleForm, {
+                shop_name: this.dataList.shop_name,
+                contact: this.dataList.contact,
+                tel: this.dataList.tel,
+                secondAddress: addressArray.pop(),
+                firstAddress: addressArray.join('/'),
+                note: this.dataList.note,
                 checkAdvice: '',
                 shop_day_limit: this.dataList.conf[4].shop_day_limit,
                 cz_service_fee_per1: this.dataList.conf[0].cz_service_fee_per,
@@ -227,7 +246,7 @@ export default {
                 cz_service_fee4: this.dataList.conf[3].cz_service_fee,
                 tx_service_fee_per: this.dataList.conf[0].tx_service_fee_per,
                 tx_service_fee: this.dataList.conf[0].tx_service_fee,
-            }
+            })   
         },
         showFlag() {
             this.$refs.ruleForm.clearValidate()
@@ -235,7 +254,7 @@ export default {
     },
     computed: {
         showFlag() {
-            return this.checkDialog
+            return this.editDialog
         }
     },
     methods: {
@@ -251,10 +270,10 @@ export default {
             
         },
         beforeClose() {
-            this.$emit('checkDialogFlag', false)
+            this.$emit('editDialogFlag', false)
         },
         checkCancel() {
-            this.$emit('checkDialogFlag', false)
+            this.$emit('editDialogFlag', false)
         },
         checkSumbit() {
             this.$refs.ruleForm.validate(async (valid) => {
@@ -265,7 +284,10 @@ export default {
                 let sumbitData = {
                     id: this.dataList.id,
                     shop_id: this.dataList.shop_id,
-                    status: this.ruleForm.checkResult,
+                    shop_name: this.ruleForm.shop_name,
+                    contact: this.ruleForm.contact,
+                    tel: this.ruleForm.tel,
+                    address: `${this.ruleForm.firstAddress}/${this.ruleForm.secondAddress}`,
                     shop_day_limit: this.ruleForm.shop_day_limit,
                     conf: [{
                         type: 1,
@@ -292,16 +314,13 @@ export default {
                     }],
                     note: this.ruleForm.note
                 }
-                let submitResult = await merchantManage.submitCheckMessage(sumbitData)
-                if(submitResult.code == 200) {
-                    if(sumbitData.status == 1) {
-                        this.$message.success('审核通过！')
-                    } else if(sumbitData.status == -1) {
-                        this.$message.error('审核不通过！')
-                    }
+                let editResult = await merchantManage.editMerchant(sumbitData)
+                if(editResult.code == 200) {
+                    this.$message.success('修改成功！')
                 }
-                this.$emit('checkDialogFlag', false)
+                this.$emit('editDialogFlag', false)
             })
+            
         },
     }
 }

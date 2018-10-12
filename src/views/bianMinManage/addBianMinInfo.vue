@@ -164,8 +164,8 @@ export default {
                         name: dataList.attachment.split('?uid=')[1].split('&name=')[1]
                     })
                     this.ruleForm.note = dataList.note
-                    
                 }
+                console.log(this.ruleForm)
             })
         }
     },

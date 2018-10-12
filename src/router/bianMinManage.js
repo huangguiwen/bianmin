@@ -18,6 +18,12 @@ export default {
             component: () => import('@/views/bianMinManage/bianMinAccount'),
             meta: { title: '边民账户列表', icon: 'tree' }
         },{   
+            path: 'singleAccountDetail',
+            name: 'singleAccountDetail',
+            hidden: true,
+            component: () => import('@/views/bianMinManage/singleAccountDetail'),
+            meta: { title: '账户明细', icon: 'tree' }
+        },{   
             path: 'addBianMinInfo',
             name: 'addBianMinInfo',
             hidden: true,
