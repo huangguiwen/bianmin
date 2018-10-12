@@ -77,7 +77,8 @@
                     <el-button size="small" @click="checkDetail">查看</el-button>
                     <el-button type="primary" size="small" @click="audit(scope.row.id)" v-if="scope.row.status == 0">审核</el-button>
                     <el-button type="success" size="small" @click="audit(scope.row.id)" v-if="scope.row.status == 1 || scope.row.status == 3 || scope.row.status == -1">修改</el-button>
-                    <el-button type="success" size="small" v-if="scope.row.status == 2">处理</el-button>
+                    <el-button type="success" size="small" @click="dispose(scope.row.id)">处理</el-button>
+                    <!-- v-if="scope.row.status == 2" -->
                 </template>
             </el-table-column>
         </el-table>
@@ -164,6 +165,9 @@ export default {
         audit(id) {
             this.id = id
             this.checkFlag = true
+        },
+        dispose(id) {
+            this.$router.push({ name: 'withdrawDispose' })
         },
         checkDetail() {
             this.$router.push({ name: 'rechargeCheckDetail' })

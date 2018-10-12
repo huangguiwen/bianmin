@@ -4,67 +4,70 @@
             <h4>手续费设置</h4>
             <el-form ref="form" v-for="(item, index) in formList" :key="index" :inline="true" class="form" :class="{bottomLine: index==3 }" label-width="200px">
                 <el-form-item :label="item.title"></el-form-item>
-                <el-form-item label="实际成本按充值金额">
-                    <el-col :span="8">
+                <div style="width: 420px; display: inline-block;">
+                    <span style="float: left; line-height: 40px; padding-right: 10px;">实际成本按充值金额</span>
+                    <el-col style="width: 130px;">
                         <el-input type="number" v-model="dataList[index].cz_real_cost_per" max="100">
                             <template slot="append">%</template>
                         </el-input>
                     </el-col>
-                    <el-col :span="2" style="text-align:center; font-size:20px;">
+                    <el-col style="width: 30px; display: inline-block; text-align:center; font-size:20px; line-height: 40px;">
                         <span class="el-icon-plus"></span>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col style="width: 100px;">
                         <el-input type="number" v-model="dataList[index].cz_real_cost"></el-input>
                     </el-col>
-                </el-form-item>
-                <el-form-item label="向商户收取手续费按充值金额">
-                    <el-col :span="8">
+                </div>
+                <div style="width: 490px; display: inline-block;">
+                    <span style="float: left; line-height: 40px; padding-right: 10px;">向商户收取手续费按充值金额</span>
+                    <el-col style="width: 130px;">
                         <el-input type="number" v-model="dataList[index].cz_service_fee_per" max="100">
                             <template slot="append">%</template>
                         </el-input>
                     </el-col>
-                    <el-col :span="2" style="text-align:center; font-size:20px;">
+                    <el-col style="width: 30px;  text-align:center; font-size:20px; line-height: 40px;">
                         <span class="el-icon-plus"></span>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col style="width: 100px;">
                         <el-input type="number" v-model="dataList[index].cz_service_fee"></el-input>
                     </el-col>
-                </el-form-item>
+                </div>
             </el-form>
             <el-form ref="form"  :inline="true" class="form" label-width="200px">
                 <el-form-item label="银联卡提现手续费："></el-form-item>
-                <el-form-item label="实际成本按提现金额">
-                    <el-col :span="8">
+                <div style="width: 420px; display: inline-block;">
+                    <span style="float: left; line-height: 40px; padding-right: 10px;">实际成本按提现金额</span>
+                    <el-col style="width: 130px;">
                         <el-input type="number" v-model="dataList[0].tx_real_cost_per" max="100">
                             <template slot="append">%</template>
                         </el-input>
                     </el-col>
-
-                    <el-col :span="2" style="text-align:center; font-size:20px;">
+                    <el-col style="width: 30px; display: inline-block; text-align:center; font-size:20px; line-height: 40px;">
                         <span class="el-icon-plus"></span>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col style="width: 100px;">
                         <el-input type="number" v-model="dataList[0].tx_real_cost"></el-input>
                     </el-col>
-                </el-form-item>
-                <el-form-item label="向商户收取手续费按提现金额">
-                    <el-col :span="8">
-                        <el-input type="number" v-model="dataList[0].tx_service_fee_per">
+                </div>
+                <div style="width: 490px; display: inline-block;">
+                    <span style="float: left; line-height: 40px; padding-right: 10px;">向商户收取手续费按提现金额</span>
+                    <el-col style="width: 130px;">
+                        <el-input type="number" v-model="dataList[0].tx_service_fee_per" max="100">
                             <template slot="append">%</template>
                         </el-input>
                     </el-col>
-                    <el-col :span="2" style="text-align:center; font-size:20px;">
+                    <el-col style="width: 30px;  text-align:center; font-size:20px; line-height: 40px;">
                         <span class="el-icon-plus"></span>
                     </el-col>
-                    <el-col :span="6">
+                    <el-col style="width: 100px;">
                         <el-input type="number" v-model="dataList[0].tx_service_fee"></el-input>
                     </el-col>
-                </el-form-item>
+                </div>
             </el-form>
         </section>
         <section>
             <h4>边民充值账号智能参数设置</h4>
-            <el-form ref="form" :inline="true" class="form" label-width="200px">
+            <el-form ref="form" :inline="true" class="form" label-width="150px" style="margin-left: 35px;">
                 <el-form-item label="银联卡每天总额度">
                     <el-col :span="24">
                         <el-input type="number" v-model="dataList[0].day_limit"></el-input>
@@ -83,7 +86,7 @@
                     </el-col>
                 </el-form-item>
             </el-form>
-            <el-form ref="form" :inline="true" class="form" label-width="200px">
+            <el-form ref="form" :inline="true" class="form" label-width="150px" style="margin-left: 35px;">
                 <el-form-item label="支付宝每天总额度">
                     <el-col :span="24">
                         <el-input type="number" v-model="dataList[1].day_limit"></el-input>
@@ -102,7 +105,7 @@
                     </el-col>
                 </el-form-item>
             </el-form>
-            <el-form ref="form" :inline="true" class="form" label-width="200px">
+            <el-form ref="form" :inline="true" class="form" label-width="150px" style="margin-left: 35px;">
                 <el-form-item label="微信每天总额度">
                     <el-col :span="24">
                         <el-input type="number" v-model="dataList[2].day_limit"></el-input>
@@ -121,7 +124,7 @@
                     </el-col>
                 </el-form-item>
             </el-form>
-            <el-form ref="form" :inline="true" class="form" label-width="200px">
+            <el-form ref="form" :inline="true" class="form" label-width="150px" style="margin-left: 35px;">
                 <el-form-item label="Q码每天总额度">
                     <el-col :span="24">
                         <el-input type="number" v-model="dataList[3].day_limit"></el-input>

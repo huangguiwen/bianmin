@@ -33,5 +33,13 @@ export default {
             component: () => import('@/views/fundsManage/withdrawManage'),
             meta: { title: '提现管理', icon: 'tree' },
         }
+        ,
+        {
+            path: 'withdrawDispose',
+            name: 'withdrawDispose',
+            hidden: true,
+            component: () => import('@/views/fundsManage/withdrawDispose'),
+            meta: { title: '提现处理', icon: 'tree' },
+        }
     ]
 }

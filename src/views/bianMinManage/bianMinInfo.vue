@@ -38,7 +38,7 @@
             <el-form-item>
                 <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
                 <el-button type="primary" class="el-icon-plus" @click="addBianMin">添加边民</el-button>
-                <!-- <el-button type="primary" class="el-icon-plus">批量导入</el-button> -->
+                <el-button type="primary" class="el-icon-plus" @click="batchImport">批量导入</el-button>
             </el-form-item>
              
         </el-form>
@@ -152,6 +152,9 @@ export default {
         },
         checkDetail(id) {
             this.$router.push({ name: 'bianMinInfoDetail', query: { id: id } })
+        },
+        batchImport() {
+            this.$router.push({ name: 'bianMinBatchImport' })
         }
     }
 }

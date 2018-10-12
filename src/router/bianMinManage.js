@@ -35,6 +35,12 @@ export default {
             hidden: true,
             component: () => import('@/views/bianMinManage/bianMinInfoDetail'),
             meta: { title: '边民信息详情', icon: 'tree' }
+        },{   
+            path: 'bianMinBatchImport',
+            name: 'bianMinBatchImport',
+            hidden: true,
+            component: () => import('@/views/bianMinManage/bianMinBatchImport'),
+            meta: { title: '批量导入边民信息', icon: 'tree' }
         }
     ]
 }
