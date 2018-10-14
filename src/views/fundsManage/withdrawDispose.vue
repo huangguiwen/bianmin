@@ -3,20 +3,20 @@
         <section>
             <div class="flex-box">
                 <div>
-                    <p>订单号：TX201809065018</p>
-                    <p>提现金额：1500</p>
-                    <p>银行：招商银行</p>
-                    <p>申请时间：2018-09-06 18:20:25</p>
+                    <p>订单号：{{ messageList.tx_id }}</p>
+                    <p>提现金额：{{ messageList.total_fee }}</p>
+                    <p>银行：{{ messageList.bank }}</p>
+                    <p>申请时间：{{ messageList.create_time | timeFormat('yyyy-MM-dd hh:mm:ss') }}</p>
                 </div>
                 <div>
-                    <p>商户名称：尚佳商城</p>
-                    <p>收取手续费：1.5</p>
-                    <p>户名：陈领馆</p>
-                    <p>状态：待处理提现</p>
+                    <p>商户名称：{{ messageList.shop_name }}</p>
+                    <p>收取手续费：{{ messageList.service_fee }}</p>
+                    <p>户名：{{ messageList.bank_username }}</p>
+                    <p>状态：{{ messageList.status }}</p>
                 </div>
                 <div>
-                    <p>手续费成本：1.2</p>
-                    <p>收款账号：6222600260001072444</p>
+                    <p>手续费成本：{{ messageList.cost_fee }}</p>
+                    <p>收款账号：{{ messageList.tx_id }}</p>
                 </div>
             </div>
         </section>
@@ -29,7 +29,7 @@
                 <el-form-item label="账号">
                     <el-input placeholder="请输入账号"></el-input>
                 </el-form-item>
-                <el-form-item label="状态">
+                <el-form-item label="类型">
                     <el-select clearable placeholder="请选择">
                         <el-option label="全部" value=""></el-option>
                         <el-option label="银联卡" value="1"></el-option>
@@ -60,55 +60,198 @@
                     <el-button type="primary" class="el-icon-search">搜索</el-button>
                 </el-form-item>
             </el-form>
-            <el-table :data="dataList">
-                <el-table-column label="账户ID" prop="tx_id"></el-table-column>
-                <el-table-column label="户名" prop="shop_name"></el-table-column>
-                <el-table-column label="类型" prop="total_fee"></el-table-column>
-                <el-table-column label="账号" prop="service_fee"></el-table-column>
-                <el-table-column label="账户余额" prop="bank"></el-table-column>
-                <el-table-column label="今日提现金额" prop="bank_username"></el-table-column>
-                <el-table-column label="今日提现笔数" prop="bank_account"></el-table-column>
-                <el-table-column label="本月提现金额" prop="status"></el-table-column>
-                <el-table-column label="本月提现笔数" prop="create_time"></el-table-column>
+            <el-table :data="dataList" max-height="400">
+                <el-table-column label="账户ID" prop="zh_id"></el-table-column>
+                <el-table-column label="户名" prop="name"></el-table-column>
+                <el-table-column label="类型" prop="account_type"></el-table-column>
+                <el-table-column label="账号" prop="account"></el-table-column>
+                <el-table-column label="账户余额" prop="balance">
+                    <template slot-scope="scope">
+                        <span>￥{{ scope.row.balance | toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="今日提现金额" prop="day_fee">
+                    <template slot-scope="scope">
+                        <span>￥{{ scope.row.day_fee | toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="今日提现笔数" prop="day_count"></el-table-column>
+                <el-table-column label="本月提现金额" prop="month_fee">
+                    <template slot-scope="scope">
+                        <span>￥{{ scope.row.month_fee | toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="本月提现笔数" prop="month_count"></el-table-column>
                 <el-table-column label="操作" prop="title" width="150px">
                     <template slot-scope="scope">
-                        <el-button type="primary" size="small">添加</el-button>
+                        <el-button type="primary" size="small" @click="selectData(scope.row)">添加</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </section>
         <section>
             <h3>——已选择打款给商户的边民账号——</h3>
-            <el-table :data="dataList">
-                <el-table-column label="账户ID" prop="tx_id"></el-table-column>
-                <el-table-column label="户名" prop="shop_name"></el-table-column>
-                <el-table-column label="类型" prop="total_fee"></el-table-column>
-                <el-table-column label="账号" prop="service_fee"></el-table-column>
-                <el-table-column label="账户余额" prop="bank"></el-table-column>
-                <el-table-column label="今日提现金额" prop="bank_username"></el-table-column>
-                <el-table-column label="今日提现笔数" prop="bank_account"></el-table-column>
-                <el-table-column label="本月提现金额" prop="status"></el-table-column>
-                <el-table-column label="本月提现笔数" prop="create_time"></el-table-column>
+            <el-table :data="selectedDataList" max-height="400">
+                <el-table-column label="账户ID" prop="zh_id"></el-table-column>
+                <el-table-column label="户名" prop="name"></el-table-column>
+                <el-table-column label="类型" prop="account_type"></el-table-column>
+                <el-table-column label="账号" prop="account"></el-table-column>
+                <el-table-column label="账户余额" prop="balance">
+                    <template slot-scope="scope">
+                        <span>￥{{ scope.row.balance | toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="今日提现金额" prop="day_fee">
+                    <template slot-scope="scope">
+                        <span>￥{{ scope.row.day_fee | toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="今日提现笔数" prop="day_count"></el-table-column>
+                <el-table-column label="本月提现金额" prop="month_fee">
+                    <template slot-scope="scope">
+                        <span>￥{{ scope.row.month_fee | toFixed(2) }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column label="本月提现笔数" prop="month_count"></el-table-column>
+                <el-table-column label="*订单号" prop="pay_order" width="200px">
+                    <template slot-scope="scope">
+                        <el-input v-model="selectedDataList[scope.$index].pay_order"></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column label="*取款金额" prop="fee" width="150px">
+                    <template slot-scope="scope">
+                        <el-input v-model="selectedDataList[scope.$index].fee"></el-input>
+                    </template>
+                </el-table-column>
+                <el-table-column label="*备注" prop="note" width="200px">
+                    <template slot-scope="scope">
+                        <el-input v-model="selectedDataList[scope.$index].note"></el-input>
+                    </template>
+                </el-table-column>
+
                 <el-table-column label="操作" prop="title" width="150px">
                     <template slot-scope="scope">
-                        <el-button type="primary" size="small">添加</el-button>
+                        <el-button type="primary" size="small" @click="removeData(scope.row)">移除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
         </section>
+        <div style="text-align: center;">
+            <el-button type="primary" size="medium" @click="saveData">存草稿</el-button>
+            <el-button type="primary" size="medium" @click="submitData">提交</el-button>
+        </div>
     </div>
 </template>
 
 <script>
+import fundsManage from '@/api/fundsManage'
 export default {
     name: 'withdrawDispose',
     data() {
         return {
-            dataList: [{}]
+            searchForm: {
+                id: ''
+            },
+            messageList: {},
+            dataList: [],
+            selectedDataList: []
         }
     },
+    created() {
+        this.searchForm.id = this.$route.query.id
+        this.getDataList()
+    },
     methods: {
-        
+        getDataList() {
+            new Promise(resolve => {
+                fundsManage.getWithdrawList({ id: this.$route.query.id }).then(res =>{
+                    if(res.code == 200) {
+                        this.messageList = res.data.list[0]
+                        resolve()
+                    }
+                })
+                fundsManage.getDepositList(this.searchForm).then(res =>{
+                    if(res.code == 200) {
+                        this.dataList = res.data.list
+                        resolve()
+                    }
+                })
+            })
+        },
+        selectData(data) {
+            console.log(data)
+            this.selectedDataList.push(data)
+            this.dataList = this.dataList.filter(item => {
+                return item.id != data.id
+            })
+        },
+        removeData(data) {
+            this.dataList.push(Object.assign(data, {pay_order: '', fee: '', note: ''}))
+            this.selectedDataList = this.selectedDataList.filter(item => {
+                return item.id != data.id
+            })
+        },
+        saveData() {
+            let saveData = {
+                id: this.$route.query.id,
+                list: this.selectedDataList,
+                isSave: true
+            }
+            if(this.selectedDataList.length > 0) {
+                fundsManage.submitDeposeData(saveData).then(res => {
+                    if(res.code == 200) {
+                        this.$confirm('是否确定打款?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                            }).then(() => {
+                            this.$message({
+                                type: 'success',
+                                message: '提交成功！'
+                            });
+                            }).catch(() => {
+                            this.$message({
+                                type: 'info',
+                                message: '已取消操作'
+                            })     
+                        })
+                    } 
+                })
+            } else {
+                this.$message.error('请添加账户！')
+            }
+            
+        },
+        submitData() {
+            let saveData = {
+                id: this.$route.query.id,
+                list: this.selectedDataList,
+                isSave: false
+            }
+            if(this.selectedDataList.length > 0) {
+                fundsManage.submitDeposeData(saveData).then(res => {
+                    if(res.code == 200) {
+                        this.$confirm('是否确定打款?', '提示', {
+                            confirmButtonText: '确定',
+                            cancelButtonText: '取消',
+                            type: 'warning'
+                            }).then(() => {
+                            this.$message({
+                                type: 'success',
+                                message: '提交成功！'
+                            });
+                            }).catch(() => {
+                            this.$message({
+                                type: 'info',
+                                message: '已取消操作'
+                            })     
+                        })
+                    } 
+                })
+            } else {
+                this.$message.error('请添加账户！')
+            }
+        }
     }
 }
 </script>
@@ -129,6 +272,9 @@ section {
         text-align: center;
     }
     
+}
+.line {
+    text-align: center;
 }
 
 </style>

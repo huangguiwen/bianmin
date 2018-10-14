@@ -18,6 +18,11 @@ export default {
             component: () => import('@/views/bianMinManage/bianMinAccount'),
             meta: { title: '边民账户列表', icon: 'tree' }
         },{   
+            path: 'accountOverview',
+            name: 'accountOverview',
+            component: () => import('@/views/bianMinManage/accountOverview'),
+            meta: { title: '边民账户概览', icon: 'tree' }
+        },{   
             path: 'singleAccountDetail',
             name: 'singleAccountDetail',
             hidden: true,
@@ -41,6 +46,12 @@ export default {
             hidden: true,
             component: () => import('@/views/bianMinManage/bianMinBatchImport'),
             meta: { title: '批量导入边民信息', icon: 'tree' }
+        },{   
+            path: 'accountBatchImport',
+            name: 'accountBatchImport',
+            hidden: true,
+            component: () => import('@/views/bianMinManage/accountBatchImport'),
+            meta: { title: '批量导入账户信息', icon: 'tree' }
         }
     ]
 }

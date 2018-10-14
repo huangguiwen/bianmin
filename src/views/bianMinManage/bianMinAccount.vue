@@ -59,7 +59,7 @@
             <el-form-item>
                 <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
                 <el-button type="primary" class="el-icon-plus" @click="addAccount">添加账户</el-button>
-                <!-- <el-button type="primary" class="el-icon-plus">批量导入</el-button> -->
+                <el-button type="primary" class="el-icon-plus" @click="batchImportAccount">批量导入</el-button>
             </el-form-item>
              
         </el-form>
@@ -228,6 +228,9 @@ export default {
                     this.getDataList()
                 }
             })
+        },
+        batchImportAccount() {
+            this.$router.push({ name: 'accountBatchImport' })
         }
     }
 }

@@ -35,9 +35,32 @@ function auditWithdraw(data) {
         data: data
     })
 }
+
+// 获取提现处理信息
+function getDepositList(data) {
+    return request({
+        url: '/admin/accounts/getDepositList',
+        method: 'get',
+        params: data
+    })
+}
+
+// 提现处理提交信息
+function submitDeposeData(data) {
+    return request({
+        url: '/admin/deposits/depositHandle',
+        method: 'post',
+        data: data
+    })
+}
+
+
+
 export default {
     getRechargeList,
     auditRecharge,
     getWithdrawList,
-    auditWithdraw
+    auditWithdraw,
+    getDepositList,
+    submitDeposeData
 }

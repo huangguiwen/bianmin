@@ -16,7 +16,7 @@ export default {
         {
             path: 'accountList',
             name: 'accountList',
-            hidden: true,
+            hidden: false,
             component: () => import('@/views/systemConfig/accountList'),
             meta: { title: '账号列表', icon: 'tree' }
         },

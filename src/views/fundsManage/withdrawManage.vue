@@ -77,8 +77,8 @@
                     <el-button size="small" @click="checkDetail">查看</el-button>
                     <el-button type="primary" size="small" @click="audit(scope.row.id)" v-if="scope.row.status == 0">审核</el-button>
                     <el-button type="success" size="small" @click="audit(scope.row.id)" v-if="scope.row.status == 1 || scope.row.status == 3 || scope.row.status == -1">修改</el-button>
-                    <el-button type="success" size="small" @click="dispose(scope.row.id)">处理</el-button>
-                    <!-- v-if="scope.row.status == 2" -->
+                    <el-button type="success" size="small" @click="dispose(scope.row.id)" v-if="scope.row.status == 2">处理</el-button>
+                    <!--  -->
                 </template>
             </el-table-column>
         </el-table>
@@ -103,7 +103,7 @@ export default {
         return {
             id: 0,
             checkFlag: false,
-            dataList: [{}],
+            dataList: [],
             searchForm: {
                 limit : 10,
                 page: 1,
@@ -167,7 +167,7 @@ export default {
             this.checkFlag = true
         },
         dispose(id) {
-            this.$router.push({ name: 'withdrawDispose' })
+            this.$router.push({ name: 'withdrawDispose', query: { id: id } })
         },
         checkDetail() {
             this.$router.push({ name: 'rechargeCheckDetail' })

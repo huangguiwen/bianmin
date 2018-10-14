@@ -250,7 +250,7 @@ export default {
             this.$router.push({ name: 'merchantDetail', query: { id: id } })
         },
         accountDetail(id) {
-            this.$router.push({ name: 'shopAccountDetail', query: { id: id } })
+            this.$router.push({ name: 'singleShopAccountDetail', query: { id: id } })
         }
     }
 }

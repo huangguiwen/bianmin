@@ -86,7 +86,7 @@ export default {
         return {
             editAccountFlag: false,
             isEdit: false,
-            dataList: [],
+            dataList: [{}],
             pageList: {
                 page: 1,
                 limit: 10,
@@ -95,7 +95,7 @@ export default {
         }
     },
     created() {
-        this.getDataList()
+        // this.getDataList()
     },
     methods: {
         getDataList() {

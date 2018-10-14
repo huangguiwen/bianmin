@@ -91,6 +91,14 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.xlsx$/,
+        loader: 'url-loader',
+        options: {
+          limit: 10240,
+          name: utils.assetsPath('file/[name].[ext]')
+        }
       }
     ]
   },

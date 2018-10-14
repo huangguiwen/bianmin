@@ -1,24 +1,31 @@
 <template>
     <div class="app-container">
-        
+        <div class="flex-box">
+            <div>
+                <p>账户余额</p>
+                <p>5100.00</p>
+            </div>
+            <div>
+                <p>共80笔</p>
+                <p>+13240.362</p>
+            </div>
+            <div>
+                <p>支出 共70笔</p>
+                <p>-13240.362</p>
+            </div>
+        </div>
         <el-form ref="form" :inline="true">
             <el-form-item label="时间">
-                <el-date-picker type="datetimerange" value-format="timestamp" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
+                <el-date-picker v-model="searchForm.create_time" type="datetimerange" value-format="timestamp" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="流水号">
-                <el-input placeholder="请输入流水号"></el-input>
-            </el-form-item>
-            <el-form-item label="商户ID">
-                <el-input placeholder="请输入商户ID"></el-input>
-            </el-form-item>
-            <el-form-item label="商户名称">
-                <el-input placeholder="请输入商户名称"></el-input>
+                <el-input placeholder="请输入流水号"  v-model="searchForm.shop_name"></el-input>
             </el-form-item>
             <el-form-item label="订单号">
                 <el-input placeholder="请输入订单号"></el-input>
             </el-form-item>
             <el-form-item label="类型">
-                <el-select clearable placeholder="请选择">
+                <el-select clearable placeholder="请选择"  v-model="searchForm.type">
                     <el-option label="全部" value=""></el-option>
                     <el-option label="退回提现手续费" value="1"></el-option>
                     <el-option label="退回提现金额" value="2"></el-option>
@@ -29,7 +36,7 @@
             </el-form-item>
             
             <el-form-item>
-                <el-button type="primary" class="el-icon-search">搜索</el-button>
+                <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
             </el-form-item>
         </el-form>
         <el-table :data="dataList">
@@ -39,8 +46,6 @@
                 </template>
             </el-table-column>
             <el-table-column label="流水号" prop="running_num"></el-table-column>
-            <el-table-column label="商户ID" prop="sh_id"></el-table-column>
-            <el-table-column label="商户" prop="shop_name"></el-table-column>
             <el-table-column label="订单号" prop="order"></el-table-column>
             <el-table-column label="类型" prop="type"></el-table-column>
             <el-table-column label="收支金额" prop="fee">
@@ -64,7 +69,7 @@
 <script>
 import bianMinManage from '@/api/bianMinManage'
 export default {
-    name: 'shopAccountDetail',
+    name: 'singleShopAccountDetail',
    
     data() {
         return {
@@ -131,6 +136,22 @@ export default {
 
 <style rel="stylesheet/scss" lang="scss" scoped>
 .app-container {
-    
+    .flex-box {
+        display: flex;
+        padding: 15px 0;
+        &>div {
+            flex: 1;
+            text-align: center;
+        }
+        &>div:nth-of-type(1) p:nth-of-type(2) {
+            color: #4C00FF;
+        }
+        &>div:nth-of-type(2) p:nth-of-type(2) {
+            color: #009900;
+        }
+        &>div:nth-of-type(3) p:nth-of-type(2) {
+            color: #CC3300;
+        }
+    }
 }
 </style>
