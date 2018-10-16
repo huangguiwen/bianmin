@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const AUTHKEY = 'authKey'
+const AUTHKEY = 'token'
 const SESSIONID = 'sessionId'
 const USERINFO = 'userInfo'
 

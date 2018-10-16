@@ -121,7 +121,7 @@
             <el-table-column label="操作" prop="title" width="350px">
                 <template slot-scope="scope">
                     <el-button size="small" @click="checkDetail(scope.row.id)">查看</el-button>
-                    <el-button size="small" type="primary" v-show="scope.row.status != -1" @click="accountDetail(scope.row.id)">账户明细</el-button>
+                    <el-button size="small" type="primary" v-show="scope.row.status != -1" @click="accountDetail(scope.row.id, scope.row.balance)">账户明细</el-button>
                     <el-button size="small" type="success" @click="showEditFlag(scope.row.id)">编辑</el-button>
                     <el-button size="small" type="warning" v-show="scope.row.status == -2 || scope.row.status == 1" @click="changeStatus(scope.row)">{{ scope.row.status == 1 ? '停用' : '启用' }}</el-button>
                     <el-button type="primary" size="small" v-show="scope.row.status == 0" @click="showCheckFlag(scope.row.id)">审核</el-button>
@@ -249,8 +249,8 @@ export default {
         checkDetail(id) {
             this.$router.push({ name: 'merchantDetail', query: { id: id } })
         },
-        accountDetail(id) {
-            this.$router.push({ name: 'singleShopAccountDetail', query: { id: id } })
+        accountDetail(id, balance) {
+            this.$router.push({ name: 'singleShopAccountDetail', query: { id: id, balance: balance } })
         }
     }
 }

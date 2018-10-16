@@ -34,7 +34,7 @@
                 </el-form-item>
                 <el-form-item label="审核结果：" prop="status">
                     <el-radio-group v-model="ruleForm.status">
-                        <el-radio :label="1">同意提现</el-radio>
+                        <el-radio :label="2">同意提现</el-radio>
                         <el-radio :label="-1">拒绝提现</el-radio>
                     </el-radio-group>
                 </el-form-item>

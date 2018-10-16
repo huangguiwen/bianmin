@@ -102,7 +102,7 @@
             </el-table-column>
             <el-table-column label="操作" prop="title" width="150px">
                 <template slot-scope="scope">
-                    <el-button size="small" @click="checkDetail">查看</el-button>
+                    <el-button size="small" @click="checkDetail(scope.row.id)">查看</el-button>
                     <el-button type="primary" size="small" @click="audit(scope.row)" v-if="scope.row.status==0">审核</el-button>
                     <el-button type="success" size="small" @click="edit(scope.row)" v-else>修改</el-button>
                 </template>
@@ -285,8 +285,8 @@ export default {
                 this.$refs.auditForm.resetField()
             }
         },
-        checkDetail() {
-            this.$router.push({ name: 'rechargeCheckDetail' })
+        checkDetail(id) {
+            this.$router.push({ name: 'rechargeCheckDetail', query: { id: id } })
         },
         addRecharge() {
             this.$router.push({ name: 'addRechargeOrder' })

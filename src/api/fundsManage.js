@@ -54,6 +54,15 @@ function submitDeposeData(data) {
     })
 }
 
+// 查看处理或提现详情
+function getDetail(data) {
+    return request({
+        url: '/admin/approveInfo',
+        method: 'get',
+        params: data
+    })
+}
+
 
 
 export default {
@@ -62,5 +71,6 @@ export default {
     getWithdrawList,
     auditWithdraw,
     getDepositList,
-    submitDeposeData
+    submitDeposeData,
+    getDetail
 }

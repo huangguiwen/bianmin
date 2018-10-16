@@ -4,9 +4,9 @@
             <h4>手续费设置</h4>
             <el-form ref="form" v-for="(item, index) in formList" :key="index" :inline="true" class="form" :class="{bottomLine: index==3 }" label-width="200px">
                 <el-form-item :label="item.title"></el-form-item>
-                <div style="width: 420px; display: inline-block;">
+                <div style="width: 430px; display: inline-block;">
                     <span style="float: left; line-height: 40px; padding-right: 10px;">实际成本按充值金额</span>
-                    <el-col style="width: 130px;">
+                    <el-col style="width: 140px;">
                         <el-input type="number" v-model="dataList[index].cz_real_cost_per" max="100">
                             <template slot="append">%</template>
                         </el-input>
@@ -20,7 +20,7 @@
                 </div>
                 <div style="width: 490px; display: inline-block;">
                     <span style="float: left; line-height: 40px; padding-right: 10px;">向商户收取手续费按充值金额</span>
-                    <el-col style="width: 130px;">
+                    <el-col style="width: 140px;">
                         <el-input type="number" v-model="dataList[index].cz_service_fee_per" max="100">
                             <template slot="append">%</template>
                         </el-input>
@@ -35,9 +35,9 @@
             </el-form>
             <el-form ref="form"  :inline="true" class="form" label-width="200px">
                 <el-form-item label="银联卡提现手续费："></el-form-item>
-                <div style="width: 420px; display: inline-block;">
+                <div style="width: 430px; display: inline-block;">
                     <span style="float: left; line-height: 40px; padding-right: 10px;">实际成本按提现金额</span>
-                    <el-col style="width: 130px;">
+                    <el-col style="width: 140px;">
                         <el-input type="number" v-model="dataList[0].tx_real_cost_per" max="100">
                             <template slot="append">%</template>
                         </el-input>
@@ -51,7 +51,7 @@
                 </div>
                 <div style="width: 490px; display: inline-block;">
                     <span style="float: left; line-height: 40px; padding-right: 10px;">向商户收取手续费按提现金额</span>
-                    <el-col style="width: 130px;">
+                    <el-col style="width: 140px;">
                         <el-input type="number" v-model="dataList[0].tx_service_fee_per" max="100">
                             <template slot="append">%</template>
                         </el-input>

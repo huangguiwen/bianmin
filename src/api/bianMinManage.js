@@ -59,7 +59,7 @@ function editBianMinAccounts(data) {
 // 商户账号明细
 function getAccountDetail(data) {
     return request({
-        url: '/admin/capitalshop',
+        url: '/admin/capitalaccount',
         method: 'get',
         data: data
     })

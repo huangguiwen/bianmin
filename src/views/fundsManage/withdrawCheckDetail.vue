@@ -5,52 +5,44 @@
                 <el-tag type="primary" style="font-size: 20px; padding: 0 10px; height: 40px; line-height: 40px;" >提现信息</el-tag>
             </div>
             <div class="item">
-                <span class="text">充值号：</span>
-                <span>{{ dataList1[0].cz_id }}</span>
-            </div>
-            <div class="item">
-                <span class="text">商户订单号：</span>
-                <span>{{ dataList1[0].shop_order_id }}</span>
+                <span class="text">订单号：</span>
+                <span>{{ dataList1[0].tx_id }}</span>
             </div>
             <div class="item">
                 <span class="text">商户名称：</span>
                 <span>{{ dataList1[0].shop_name }}</span>
             </div>
             <div class="item">
-                <span class="text">订单金额：</span>
+                <span class="text">提现金额：</span>
                 <span>{{ dataList1[0].total_fee }}</span>
             </div>
             <div class="item">
-                <span class="text">充值金额：</span>
-                <span>{{ dataList1[0].real_fee }}</span>
-            </div>
-            <div class="item">
-                <span class="text">收取手续费</span>
+                <span class="text">收取手续费：</span>
                 <span>{{ dataList1[0].service_fee }}</span>
             </div>
             <div class="item">
-                <span class="text">手续费成本</span>
+                <span class="text">手续费成本：</span>
                 <span>{{ dataList1[0].cost_fee }}</span>
             </div>
             <div class="item">
-                <span class="text">类型：</span>
-                <span>{{ dataList1[0].account_type | accounType }}</span>
+                <span class="text">银行：</span>
+                <span>{{ dataList1[0].bank }}</span>
             </div>
             <div class="item">
                 <span class="text">户名：</span>
-                <span>{{ dataList1[0].account_name }}</span>
+                <span>{{ dataList1[0].bank_username }}</span>
             </div>
             <div class="item">
-                <span class="text">收款账户：</span>
-                <span>{{ dataList1[0].account }}</span>
+                <span class="text">收款账号：</span>
+                <span>{{ dataList1[0].bank_account }}</span>
             </div>
             <div class="item">
-                <span class="text">充值时间：</span>
+                <span class="text">申请时间：</span>
                 <span>{{ dataList1[0].create_time | timeFormat('yyyy-MM-dd hh:mm:ss') }}</span>
             </div>
             <div class="item">
                 <span class="text">状态：</span>
-                <span>{{ dataList1[0].status | accontStatus }}</span>
+                <span>{{ dataList1[0].status | statusFilter }}</span>
             </div>
         </section>
         <section class="processing-record">
@@ -87,7 +79,7 @@
 <script>
 import fundsManage from '@/api/fundsManage'
 export default {
-    name: 'rechargeCheckDetail',
+    name: 'withdrawCheckDetail',
     data() {
         return {
             dataList1: [],
@@ -95,46 +87,40 @@ export default {
         }
     },
     created() {
-        fundsManage.getRechargeList({ id: this.$route.query.id }).then(res => {
+        fundsManage.getWithdrawList({ id: this.$route.query.id }).then(res => {
             if(res.code == 200) {
                 this.dataList1 = res.data.list
             }
         })
-        fundsManage.getDetail({ type: 1, order_id: this.$route.query.id }).then(res => {
+        fundsManage.getDetail({ type: 2, order_id: this.$route.query.id }).then(res => {
             if(res.code == 200) {
                 this.dataList2 = res.data.list
             }
         })
     },
     filters: {
-        accounType(value) {
+        statusFilter(value) {
             switch(value) {
-                case 1: 
-                    return '银联卡'
-                case 2: 
-                    return '支付宝'
-                case 3: 
-                    return '微信'
-                case 4: 
-                    return 'Q码'
-            }
-        },
-        accontStatus(value) {
-            switch(value) {
-                case 0: 
-                    return '待审核'
-                case 1: 
-                    return '确认到账'
+                case -2: 
+                    return '关闭提现'
                 case -1: 
-                    return '未到账'
+                    return '拒绝提现'
+                case 0: 
+                    return '待审核提现'
+                case 1: 
+                    return '待商户确认'
+                case 2: 
+                    return '待处理提现'
+                case 3: 
+                    return '处理完成'
             }
         },
         resultFilter(value) {
             switch(value) {
                 case 1: 
-                    return '同意充值'
+                    return '同意提现'
                 case -1: 
-                    return '拒绝充值'
+                    return '拒绝提现'
             }
         }
     }

@@ -45,10 +45,20 @@ function changeStatus(data) {
     })
 }
 
+// 商户账号明细
+function getAccountDetail(data) {
+    return request({
+        url: '/admin/capitalshop',
+        method: 'get',
+        params: data
+    })
+}
+
 export default {
     getMerchantList,
     getCheckMessage,
     submitCheckMessage,
     editMerchant,
-    changeStatus
+    changeStatus,
+    getAccountDetail
 }

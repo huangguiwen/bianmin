@@ -3,15 +3,15 @@
         <div class="flex-box">
             <div>
                 <p>账户余额</p>
-                <p>5100.00</p>
+                <p>{{ message.balance }}</p>
             </div>
             <div>
-                <p>共80笔</p>
-                <p>+13240.362</p>
+                <p>共{{ message.intput_count }}笔</p>
+                <p>{{ message.intput_fee }}</p>
             </div>
             <div>
-                <p>支出 共70笔</p>
-                <p>-13240.362</p>
+                <p>支出 共{{ message.output_count }}笔</p>
+                <p>{{ message.output_fee }}</p>
             </div>
         </div>
         <el-form ref="form" :inline="true">
@@ -27,11 +27,14 @@
             <el-form-item label="类型">
                 <el-select clearable placeholder="请选择"  v-model="searchForm.type">
                     <el-option label="全部" value=""></el-option>
-                    <el-option label="退回提现手续费" value="1"></el-option>
-                    <el-option label="退回提现金额" value="2"></el-option>
-                    <el-option label="提现手续费" value="3"></el-option>
-                    <el-option label="充值" value="4"></el-option>
-                    <el-option label="充值手续费" value="5"></el-option>
+                    <el-option label="提现" value="1"></el-option>
+                    <el-option label="提现手续费" value="2"></el-option>
+                    <el-option label="退款提现金额" value="3"></el-option>
+                    <el-option label="退款提现手续费" value="4"></el-option>
+                    <el-option label="充值" value="5"></el-option>
+                    <el-option label="充值手续费" value="6"></el-option>
+                    <el-option label="退款充值金额" value="7"></el-option>
+                    <el-option label="退款充值手续费" value="8"></el-option>
                 </el-select>
             </el-form-item>
             
@@ -47,7 +50,11 @@
             </el-table-column>
             <el-table-column label="流水号" prop="running_num"></el-table-column>
             <el-table-column label="订单号" prop="order"></el-table-column>
-            <el-table-column label="类型" prop="type"></el-table-column>
+            <el-table-column label="类型" prop="type">
+                <template slot-scope="scope">
+                    <el-tag>{{ scope.row.type | typeFilter }}</el-tag>
+                </template>
+            </el-table-column>
             <el-table-column label="收支金额" prop="fee">
                 <template slot-scope="scope">
                     <span>￥{{ scope.row.fee | toFixed(2)}}</span>
@@ -67,13 +74,14 @@
 </template>
 
 <script>
-import bianMinManage from '@/api/bianMinManage'
+import merchantManage from '@/api/merchantManage'
 export default {
     name: 'singleShopAccountDetail',
    
     data() {
         return {
             dataList: [],
+            message: {},
             searchForm: {
                 limit: 10,
                 page: 1,
@@ -82,35 +90,43 @@ export default {
         }
     },
     created() {
+        this.searchForm.shop_id = this.$route.query.id
         this.getDataList()
     },
-    // filters: {
-    //     accounType(value) {
-    //         switch(value) {
-    //             case 1: 
-    //                 return '银联卡'
-    //             case 2: 
-    //                 return '支付宝'
-    //             case 3: 
-    //                 return '微信'
-    //             case 4: 
-    //                 return 'Q码'
-    //         }
-    //     },
-    //     accontStatus(value) {
-    //         switch(value) {
-    //             case 0: 
-    //                 return '停用'
-    //             case 1: 
-    //                 return '使用中'
-    //         }
-    //     }
-    // },
+    filters: {
+        typeFilter(value) {
+            switch(value) {
+                case 1: 
+                    return '提现'
+                case 2: 
+                    return '提现手续费'
+                case 3: 
+                    return '退款提现金额'
+                case 4: 
+                    return '退款提现手续费'
+                case 5: 
+                    return '充值'
+                case 6: 
+                    return '充值手续费'
+                case 7: 
+                    return '退款充值金额'
+                case 8: 
+                    return '退款充值手续费'
+            }
+        }
+    },
     methods: {
         getDataList() {
-            bianMinManage.getAccountDetail(this.searchForm).then(res => {
+            merchantManage.getAccountDetail(this.searchForm).then(res => {
                 if(res.code == 200) {
                     this.dataList = res.data.list
+                    this.message = {
+                        balance: this.$route.query.balance,
+                        intput_fee: res.data.intput_fee,
+                        intput_count: res.data.intput_count,
+                        output_fee: res.data.output_fee,
+                        output_count: res.data.output_count
+                    }
                     this.searchForm.dataCount = res.data.dataCount
                 }
             })
