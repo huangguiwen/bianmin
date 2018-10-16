@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <el-dialog title="审核" :visible.sync="showFlag" :before-close="beforeClose" width="40%">
+        <el-dialog title="编辑" :visible.sync="showFlag" :before-close="beforeClose" width="40%">
             <div class="item">
                 <span class="text">商户ID：</span>
                 <span>{{ dataList.sh_id }}</span>
@@ -314,7 +314,7 @@ export default {
                     }],
                     note: this.ruleForm.note
                 }
-                let editResult = await merchantManage.editMerchant(sumbitData)
+                let editResult = await merchantManage.changeStatus(sumbitData)
                 if(editResult.code == 200) {
                     this.$message.success('修改成功！')
                 }

@@ -63,6 +63,15 @@ function getDetail(data) {
     })
 }
 
+// 获取提现审核处理记录
+function getDepositResult(data) {
+    return request({
+        url: '/admin/capitalaccount/getDepositResult',
+        method: 'post',
+        data: data
+    })
+}
+
 
 
 export default {
@@ -72,5 +81,6 @@ export default {
     auditWithdraw,
     getDepositList,
     submitDeposeData,
-    getDetail
+    getDetail,
+    getDepositResult
 }

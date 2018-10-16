@@ -49,30 +49,55 @@
             <div>
                 <el-tag type="primary" style="font-size: 20px; padding: 0 10px; height: 40px; line-height: 40px;" >处理记录</el-tag>
             </div>
-            <div v-for="(item, index) in dataList2" :key="index" style="padding: 10px; margin-top: 10px; border: 1px solid #ccc;">
-                <div class="item">
-                    <span class="text">审核人：</span>
-                    <span>{{ item.approver }}</span>
+            <div style="overflow: auto; max-height: 500px;">
+                <div v-for="(item, index) in dataList2" :key="index" style="padding: 10px; margin-top: 10px; border: 1px solid #ccc;">
+                    <div class="item">
+                        <span class="text">审核人：</span>
+                        <span>{{ item.approver }}</span>
+                    </div>
+                    <div class="item">
+                        <span class="text">审核时间：</span>
+                        <span>{{ item.create_time | timeFormat('yyyy-MM-dd hh:mm:ss') }}</span>
+                    </div>
+                    <div class="item">
+                        <span class="text">审核结果：</span>
+                        <span>{{ item.result | resultFilter }}</span>
+                    </div>
+                    <div class="item">
+                        <span class="text">订单号：</span>
+                        <span>{{ item.pay_order_id }}</span>
+                    </div>
+                    <div class="item">
+                        <span class="text">备注：</span>
+                        <span>{{ item.note }}</span>
+                    </div>
                 </div>
-                <div class="item">
-                    <span class="text">审核时间：</span>
-                    <span>{{ item.create_time | timeFormat('yyyy-MM-dd hh:mm:ss') }}</span>
+            </div>
+            <div v-for="(item, index) in dataList3" :key="index" style="padding: 10px; margin-top: 10px; border: 1px solid #ccc;">
+                <div class="item inline">
+                    <span class="text">取款账号类型：</span>
+                    <span>{{ item.account_type | accounType }}</span>
                 </div>
-                <div class="item">
-                    <span class="text">审核结果：</span>
-                    <span>{{ item.result | resultFilter }}</span>
+                <div class="item inline">
+                    <span class="text">取款账号：</span>
+                    <span>{{ item.account }}</span>
                 </div>
-                <div class="item">
+                <div class="item inline">
                     <span class="text">订单号：</span>
                     <span>{{ item.pay_order_id }}</span>
                 </div>
-                <div class="item">
+                <div class="item inline">
+                    <span class="text">取款金额：</span>
+                    <span>{{ item.fee }}</span>
+                </div>
+                <div class="item inline">
                     <span class="text">备注：</span>
                     <span>{{ item.note }}</span>
                 </div>
             </div>
-            
         </section>
+
+        
     </div>
 </template>
 
@@ -83,18 +108,27 @@ export default {
     data() {
         return {
             dataList1: [],
-            dataList2: []
+            dataList2: [],
+            dataList3: []
         }
     },
     created() {
         fundsManage.getWithdrawList({ id: this.$route.query.id }).then(res => {
             if(res.code == 200) {
                 this.dataList1 = res.data.list
+                console.log(this.dataList1)
             }
         })
         fundsManage.getDetail({ type: 2, order_id: this.$route.query.id }).then(res => {
             if(res.code == 200) {
                 this.dataList2 = res.data.list
+                console.log(this.dataList2)
+            }
+        })
+        fundsManage.getDepositResult({ id: this.$route.query.id }).then(res => {
+            if(res.code == 200) {
+                this.dataList3 = res.data.list
+                console.log(this.dataList3)
             }
         })
     },
@@ -102,9 +136,9 @@ export default {
         statusFilter(value) {
             switch(value) {
                 case -2: 
-                    return '关闭提现'
-                case -1: 
                     return '拒绝提现'
+                case -1: 
+                    return '关闭提现'
                 case 0: 
                     return '待审核提现'
                 case 1: 
@@ -122,7 +156,19 @@ export default {
                 case -1: 
                     return '拒绝提现'
             }
-        }
+        },
+        accounType(value) {
+            switch(value) {
+                case 1: 
+                    return '银联卡'
+                case 2: 
+                    return '支付宝'
+                case 3: 
+                    return '微信'
+                case 4: 
+                    return 'Q码'
+            }
+        },
     }
 }
 </script>
@@ -138,8 +184,11 @@ export default {
     padding: 10px 0;
 }
 .text {
-    width: 100px;
+    width: 120px;
     display: inline-block;
     text-align: right;
+}
+.inline {
+    display: inline-block;
 }
 </style>

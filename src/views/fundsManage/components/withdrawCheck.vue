@@ -1,6 +1,6 @@
 <template>
     <div class="app-container">
-        <el-dialog title="审核" :visible.sync="visibleAuditFlag" width="40%">
+        <el-dialog :title="id ? '修改' : '审核'" :visible.sync="visibleAuditFlag" width="40%">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="120px">
                 <el-form-item label="订单号：">
                     <span>{{ dataList.tx_id }}</span>
@@ -105,9 +105,9 @@ export default {
         statusFilter(value) {
             switch(value) {
                 case -2: 
-                    return '关闭提现'
-                case -1: 
                     return '拒绝提现'
+                case -1: 
+                    return '关闭提现'
                 case 0: 
                     return '待审核提现'
                 case 1: 

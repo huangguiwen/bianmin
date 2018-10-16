@@ -61,7 +61,7 @@ function getAccountDetail(data) {
     return request({
         url: '/admin/capitalaccount',
         method: 'get',
-        data: data
+        params: data
     })
 }
 

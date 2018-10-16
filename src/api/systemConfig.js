@@ -7,9 +7,28 @@ function getRuleSettingList() {
     })
 }
 
+// 获取用户列表
 function getUsersList(data) {
     return request({
         url: '/admin/users',
+        method: 'get',
+        params: data
+    })
+}
+
+// 添加新用户
+function addUser(data) {
+    return request({
+        url: '/admin/users',
+        method: 'post',
+        data: data
+    })
+}
+
+// 添加新用户
+function updateDataUser(data) {
+    return request({
+        url: '/admin/users/updateData',
         method: 'post',
         data: data
     })
@@ -38,5 +57,7 @@ export default {
     getRuleSettingList,
     getUsersList,
     getMerchantList,
-    updateMerchant
+    updateMerchant,
+    addUser,
+    updateDataUser
 }

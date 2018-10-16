@@ -91,6 +91,7 @@ export default {
         }
         
         return {
+            id: 0,
             uploadPath: process.env.UPLOAD_PATH,
             baseApi: process.env.BASE_API,
             firstAddress: '',
@@ -138,9 +139,9 @@ export default {
         }
     },
     created() {
-        let id = this.$route.params.id
-        if(id) {
-            bianMinManage.getBianMin({ id: id }).then(res => {
+        this.id = this.$route.query.id
+        if(this.id) {
+            bianMinManage.getBianMin({ id: this.id }).then(res => {
                 if(res.code == 200) {
                     let dataList = res.data.list[0]
                     let addressArray = dataList.address.split('/')
@@ -153,20 +154,25 @@ export default {
                     this.ruleForm.secondAddress = addressArray.pop()
                     this.ruleForm.firstAddress = addressArray.join('/')
                     this.ruleForm.fingerPrint.push(dataList.fingerprint)
-                    this.ruleForm.authorization.push({
-                        url: dataList.authorization,
-                        uid: dataList.authorization.split('?uid=')[1].split('&name=')[0],
-                        name: dataList.authorization.split('?uid=')[1].split('&name=')[1]
-                    })
-                    this.ruleForm.attachment.push({
-                        url: dataList.attachment,
-                        uid: dataList.attachment.split('?uid=')[1].split('&name=')[0],
-                        name: dataList.attachment.split('?uid=')[1].split('&name=')[1]
-                    })
                     this.ruleForm.note = dataList.note
-                }
-                console.log(this.ruleForm)
+                    try {
+                        this.ruleForm.authorization.push({
+                            url: dataList.authorization,
+                            uid: dataList.authorization.split('?uid=')[1].split('&name=')[0],
+                            name: dataList.authorization.split('?uid=')[1].split('&name=')[1]
+                        })
+                        this.ruleForm.attachment.push({
+                            url: dataList.attachment,
+                            uid: dataList.attachment.split('?uid=')[1].split('&name=')[0],
+                            name: dataList.attachment.split('?uid=')[1].split('&name=')[1]
+                        }) 
+                    } catch (error) {
+                        
+                    }
+                    
+                } 
             })
+            
         }
     },
     methods: {

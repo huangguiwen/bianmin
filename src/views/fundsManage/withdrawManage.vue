@@ -32,8 +32,8 @@
                     <el-option label="待商户确认" value="1"></el-option>
                     <el-option label="待处理提现" value="2"></el-option>
                     <el-option label="处理完成" value="3"></el-option>
-                    <el-option label="拒绝提现" value="-1"></el-option>
-                    <el-option label="关闭提现" value="-2"></el-option>
+                    <el-option label="拒绝提现" value="-2"></el-option>
+                    <el-option label="关闭提现" value="-1"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
@@ -118,9 +118,9 @@ export default {
         statusFilter(value) {
             switch(value) {
                 case -2: 
-                    return '关闭提现'
-                case -1: 
                     return '拒绝提现'
+                case -1: 
+                    return '关闭提现'
                 case 0: 
                     return '待审核提现'
                 case 1: 
@@ -146,6 +146,7 @@ export default {
         },
         handleCurrentChange(value) {
             this.searchForm.page = value
+            this.getDataList()
         },
         searchData() {
             try {

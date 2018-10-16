@@ -120,7 +120,7 @@
                 </el-table-column>
                 <el-table-column label="*取款金额" prop="fee" width="150px">
                     <template slot-scope="scope">
-                        <el-input v-model="selectedDataList[scope.$index].fee"></el-input>
+                        <el-input type="number" :max="messageList.total_fee" min="0" v-model="selectedDataList[scope.$index].fee"></el-input>
                     </template>
                 </el-table-column>
                 <el-table-column label="*备注" prop="note" width="200px">
@@ -137,7 +137,7 @@
             </el-table>
         </section>
         <div style="text-align: center;">
-            <el-button type="primary" size="medium" @click="saveData">存草稿</el-button>
+            <!-- <el-button type="primary" size="medium" @click="saveData">存草稿</el-button> -->
             <el-button type="primary" size="medium" @click="submitData">提交</el-button>
         </div>
     </div>

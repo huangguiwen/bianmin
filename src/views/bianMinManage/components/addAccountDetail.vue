@@ -16,7 +16,7 @@
                 </el-form-item>
                 <el-form-item label="账号类型" prop="accounType">
                     <el-select v-model="ruleForm.accounType" @change="handleAccountTypeChange" placeholder="请选择">
-                        <el-option label="银联卡" :value="1" disabled></el-option>
+                        <el-option label="银联卡" :value="1"></el-option>
                         <el-option label="支付宝" :value="2"></el-option>
                         <el-option label="微信" :value="3"></el-option>
                         <el-option label="Q码" :value="4" disabled></el-option>

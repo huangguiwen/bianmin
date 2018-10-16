@@ -132,7 +132,7 @@ export default {
             this.$router.push({ name: 'addBianMinInfo' })
         },
         editBianMin(id) {
-            this.$router.push({ name: 'addBianMinInfo', params: { id: id } })
+            this.$router.push({ name: 'addBianMinInfo', query: { id: id } })
         },
         handleCurrentChange(value) {
             this.searchForm.page = value

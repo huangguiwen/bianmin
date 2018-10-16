@@ -52,7 +52,7 @@
             </el-form-item>
         </el-form>
         <div class="introduce">
-            <h3>边民资料管理系统</h3>
+            <h3><img :src="logo" alt="logo" height="32" style="vertical-align: top;"> 边民资料管理系统</h3>
             <p>一款安全、简单、实用的资料平台</p>
         </div>
         <p class="footer">Copyright © 晶品科技 All rights Resered</p>
@@ -83,6 +83,7 @@ export default {
     }
     return {
       keepPassword: false,
+      logo: require('assets/login/logo.png'),
       loginForm: {
         username: '',
         password: ''
@@ -161,7 +162,7 @@ export default {
         top: 250px;
         color: #fff;
         h3 { font-size: 30px; margin: 0; font-weight: 400; }
-        p { font-size: 12px; }
+        p { font-size: 12px; text-indent: 63px; }
     }
     .footer {
         width: 100%;

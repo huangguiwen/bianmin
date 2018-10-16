@@ -16,7 +16,7 @@
             <el-form-item label="账户余额">
                 <el-input placeholder="请输入账户余额" v-model="searchForm.balance"></el-input>
             </el-form-item>
-            <el-form-item label="今日充值金额">
+            <!-- <el-form-item label="今日充值金额">
                 <el-col :span="11">
                     <el-input placeholder="请输入今日充值金额最小值" v-model="searchForm.day_recharge_fee_gt"></el-input>
                 </el-col>
@@ -69,7 +69,7 @@
                 <el-col :span="11">
                     <el-input placeholder="请输入今日提现金额最大值" v-model="searchForm.day_deposit_fee_lt"></el-input>
                 </el-col>
-            </el-form-item>
+            </el-form-item> -->
             <el-form-item label="类型">
                 <el-select clearable placeholder="请选择" v-model="searchForm.account_type">
                     <el-option label="全部" value=""></el-option>
@@ -80,7 +80,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" class="el-icon-search">搜索</el-button>
+                <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
             </el-form-item>
              
         </el-form>
@@ -203,6 +203,9 @@ export default {
         },
         checkAccountDetail(id) {
             this.$router.push({ name: 'singleAccountDetail', query: { id: id } })
+        },
+        searchData() {
+            this.getDataList()
         }
     }
 }
