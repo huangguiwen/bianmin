@@ -226,8 +226,8 @@ export default {
                     note: this.ruleForm.note
                 }
 
-                if(this.$route.params.id) {
-                    _data.id = this.$route.params.id
+                if(this.$route.query.id) {
+                    _data.id = this.$route.query.id
                     var addBianMinResult = await bianMinManage.editBianMin(_data)
                 } else {
                     var addBianMinResult = await bianMinManage.addBianMin(_data)

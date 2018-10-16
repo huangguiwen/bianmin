@@ -127,7 +127,8 @@ export default {
                     this.searchForm.create_time_lt = parseInt(this.searchForm.create_time[1])/1000
                 }
             } catch (error) {
-                
+                this.searchForm.create_time_gt = ''
+                this.searchForm.create_time_lt = ''
             }
             this.getDataList()
         }

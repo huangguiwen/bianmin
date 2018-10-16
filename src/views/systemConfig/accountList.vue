@@ -2,13 +2,13 @@
     <div class="app-container">
         <el-form ref="form" :inline="true">
             <el-form-item label="账号">
-                <el-input placeholder="请输入账号"></el-input>
+                <el-input placeholder="请输入账号" v-model="searchForm.username"></el-input>
             </el-form-item>
             <el-form-item label="姓名">
-                <el-input placeholder="请输入账号"></el-input>
+                <el-input placeholder="请输入账号" v-model="searchForm.realname"></el-input>
             </el-form-item>
             <el-form-item label="手机号码">
-                <el-input placeholder="请输入账号"></el-input>
+                <el-input placeholder="请输入账号" v-model="searchForm.phone"></el-input>
             </el-form-item>
             <!-- <el-form-item label="角色">
                 <el-select clearable placeholder="请选择角色">
@@ -20,13 +20,13 @@
                 </el-select>
             </el-form-item> -->
             <el-form-item label="状态">
-                <el-select clearable placeholder="请选择状态">
+                <el-select clearable placeholder="请选择状态" v-model="searchForm.status">
                     <el-option value="1" label="启用"></el-option>
                     <el-option value="0" label="停用"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" class="el-icon-search">搜索</el-button>
+                <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" class="el-icon-plus" @click="addAccount">添加账号</el-button>
@@ -200,6 +200,9 @@ export default {
                     })       
                 })
             }
+        },
+        searchData() {
+            this.getDataList()
         },
         // remove() {
         //     this.$confirm('确定停用姓名为“陈琳”的账号', '提示', {

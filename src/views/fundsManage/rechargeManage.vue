@@ -100,7 +100,7 @@
                     <el-tag :type="scope.row.status==0 ? 'primary' : (scope.row.status==1 ? 'success' : 'warning')">{{ scope.row.status | accontStatus }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" prop="title" width="150px">
+            <el-table-column label="操作" prop="title" width="250px">
                 <template slot-scope="scope">
                     <el-button size="small" @click="checkDetail(scope.row.id)">查看</el-button>
                     <el-button type="primary" size="small" @click="audit(scope.row)" v-if="scope.row.status==0">审核</el-button>
@@ -263,9 +263,9 @@ export default {
                     this.searchForm.create_time_gt = parseInt(this.searchForm.create_time[0])/1000
                     this.searchForm.create_time_lt = parseInt(this.searchForm.create_time[1])/1000
                 }
-
             } catch (error) {
-                
+                this.searchForm.create_time_gt = ''
+                this.searchForm.create_time_lt = ''
             }
             this.getDataList()
         },

@@ -241,7 +241,7 @@ export default {
                     this.tabsList = res.data.list[0]
                 }
             })
-            this.searchForm.id = this.id
+            this.searchForm.bianmin_id = this.id
             bianMinManage.getBianMinAccounts(this.searchForm).then(res => {
                 if(res.code == 200) {
                     this.dataList = res.data.list

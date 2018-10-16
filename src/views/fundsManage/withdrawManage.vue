@@ -72,7 +72,7 @@
                     <span>{{ scope.row.create_time | timeFormat('yyyy-MM-dd hh:mm:ss')}}</span>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" prop="title" width="150px">
+            <el-table-column label="操作" prop="title" width="250px">
                 <template slot-scope="scope">
                     <el-button size="small" @click="checkDetail(scope.row.id)">查看</el-button>
                     <el-button type="primary" size="small" @click="audit(scope.row.id)" v-if="scope.row.status == 0">审核</el-button>
@@ -156,7 +156,8 @@ export default {
                 }
 
             } catch (error) {
-                
+                this.searchForm.create_time_gt = ''
+                this.searchForm.create_time_lt = ''
             }
             this.getDataList()
         },

@@ -101,12 +101,6 @@
                     <el-tag :type="scope.row.status==1 ? 'success' : 'danger'">{{ scope.row.status | accontStatus }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column label="操作" width="250px">
-                <template slot-scope="scope">
-                    <el-button type="primary" size="small" @click="editAccount(scope.row)">编辑</el-button>
-                    <el-button :type="scope.row.status==1 ? 'danger' : 'success'" size="small" @click="changeStatus(scope.row)">{{ scope.row.status==1 ? '停用' : '启用' }}</el-button>
-                </template>
-            </el-table-column>
         </el-table>
 
         <el-pagination @current-change="handleCurrentChange" :current-page.sync="searchForm.page" :page-size="searchForm.limit" 
@@ -122,7 +116,6 @@ import bianMinManage from '@/api/bianMinManage'
 import addAccountDetail from './components/addAccountDetail'
 import zoomImg from '@/components/zoomImg'
 export default {
-    name: 'bianMinAccount',
     components: {
         addAccountDetail,
         zoomImg

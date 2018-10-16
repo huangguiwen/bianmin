@@ -9,7 +9,7 @@
                     <span>{{ dataList1[0].name }}</span>
                 </el-form-item>
                 <el-form-item label="类型：" style="margin-right: 50px;">
-                    <span>{{ dataList1[0].account_type | typeFilter }}</span>
+                    <span>{{ dataList1[0].account_type | accounType }}</span>
                 </el-form-item>
                 <el-form-item label="账号：" style="margin-right: 50px;">
                     <span>{{ dataList1[0].account }}</span>
@@ -189,7 +189,19 @@ export default {
                 case 8: 
                     return '退款充值手续费'
             }
-        }
+        },
+        accounType(value) {
+            switch(value) {
+                case 1: 
+                    return '银联卡'
+                case 2: 
+                    return '支付宝'
+                case 3: 
+                    return '微信'
+                case 4: 
+                    return 'Q码'
+            }
+        },
     },
     methods: {
         getDataList() {
@@ -211,7 +223,8 @@ export default {
                     this.searchForm.create_time_lt = parseInt(this.searchForm.create_time[1])/1000
                 }
             } catch (error) {
-                
+                this.searchForm.create_time_gt = ''
+                this.searchForm.create_time_lt = ''
             }
             this.getDataList()
         }
