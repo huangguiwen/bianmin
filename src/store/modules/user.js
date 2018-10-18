@@ -1,12 +1,11 @@
 import { login, logout, getInfo } from '@/api/login'
 import { getAuthKey, setAuthKey, removeAuthKey, getSessionId, setSessionId, getUserInfo, setUserInfo } from '@/utils/auth'
+// import axios from 'axios' 
 
 const user = {
   state: {
     authKey: getAuthKey(),
     sessionId: getSessionId(),
-    // name: '',
-    // avatar: '',
     userInfo: getUserInfo()
   },
 
@@ -15,14 +14,8 @@ const user = {
       state.authKey = authKey
     },
     SET_SESSIONID: (state, sessionId) => {
-        state.sessionId = sessionId
+      state.sessionId = sessionId
     },
-    // SET_NAME: (state, name) => {
-    //   state.name = name
-    // },
-    // SET_AVATAR: (state, avatar) => {
-    //   state.avatar = avatar
-    // },
     SET_USERINFO: (state, userInfo) => {
       state.userInfo = userInfo
     }
@@ -58,24 +51,19 @@ const user = {
           } else {
             reject('getInfo: userInfo must be a non-null array !')
           }
-        //   commit('SET_NAME', data.name)
-        //   commit('SET_AVATAR', data.avatar)
           resolve(response)
         }).catch(error => {
           reject(error)
         })
       })
     },
-
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
         logout(state.token).then(() => {
           commit('SET_AUTHKEY', '')
-        //   commit('SET_SESSIONID', '')
           commit('SET_USERINFO', [])
           removeAuthKey()
-        //   removeSessionId()
           resolve()
         }).catch(error => {
           reject(error)
@@ -87,9 +75,7 @@ const user = {
     FedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_AUTHKEY', '')
-        // commit('SET_SESSIONID', '')
         removeAuthKey()
-        // removeSessionId()
         resolve()
       })
     }

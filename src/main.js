@@ -11,6 +11,7 @@ import '@/icons' // icon
 import '@/permission' // permission control
 import '@/utils'
 import '@/filters'
+import '@/mock'
 
 Vue.use(ElementUI)
 

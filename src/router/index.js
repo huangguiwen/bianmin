@@ -28,34 +28,62 @@ import operationManage from './operationManage'
   }
 **/
 export const constantRouterMap = [
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
-  { path: '/404', component: () => import('@/views/404'), hidden: true },
-
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/home',
-    name: 'home',
-    hidden: true,
-    children: [{
-      path: 'home',
-      meta: {title: '首页'},
-      component: () => import('@/views/home/index')
-    }]
-  },
-  { path: '*', redirect: '/404', hidden: true },
-  login,
-  bianMinManage,
-  merchantManage,
-  fundsManage,
-  operationManage,
-  systemConfig,
+    { 
+        path: '/login', 
+        component: () => import('@/views/login/index'), 
+        hidden: true 
+    },{ 
+        path: '/404', 
+        component: () => import('@/views/404'), 
+        hidden: true 
+    },{
+        path: '/',
+        component: Layout,
+        redirect: '/home',
+        name: 'home',
+        hidden: true,
+        children: [{
+        path: 'home',
+        meta: {title: '首页'},
+        component: () => import('@/views/home/index')
+        }]
+    }
 ]
 
+export const asyncRouterMap = [
+    { 
+        path: '*',
+        redirect: '/404', 
+        hidden: true 
+    },
+    login,
+    bianMinManage,
+    merchantManage,
+    fundsManage,
+    operationManage,
+    systemConfig
+]
 
-export default new Router({
-  // mode: 'history', //后端支持可开
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRouterMap
+constantRouterMap.forEach(router => {
+    router.fullPath = router.path
+    setChildFullPath(router)
 })
+
+function setChildFullPath(parent) {
+    if (!parent.children || parent.children.length === 0) {
+      return false
+    }
+    parent.children.forEach(item => {
+      item.fullPath = parent.fullPath + '/' + item.path
+      setChildFullPath(item)
+    })
+}
+
+const router = new Router({
+    // mode: 'history', //后端支持可开
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRouterMap
+  })
+
+export default router
 
