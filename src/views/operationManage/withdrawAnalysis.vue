@@ -17,16 +17,16 @@
                 <el-button type="primary">拒绝提现订单数</el-button>
                 <el-button type="primary">拒绝提现金额</el-button>
             </el-button-group>
-            <recharge-chart></recharge-chart>
+            <withdraw-chart></withdraw-chart>
         </section>
         <section>
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column prop="date" label="日期"></el-table-column>
-                <el-table-column prop="name" label="充值次数"></el-table-column>
-                <el-table-column prop="name" label="充值金额"></el-table-column>
-                <el-table-column prop="name" label="到账金额"></el-table-column>
-                <el-table-column prop="name" label="待审核充值订单数量"></el-table-column>
-                <el-table-column prop="name" label="待审核充值订单总金额"></el-table-column>
+                <el-table-column prop="name" label="提现次数"></el-table-column>
+                <el-table-column prop="name" label="提现金额"></el-table-column>
+                <el-table-column prop="name" label="待审核提现订单数"></el-table-column>
+                <el-table-column prop="name" label="待审核提现总金额"></el-table-column>
+                <el-table-column prop="name" label="拒绝提现订单数"></el-table-column>
             </el-table>
         </section>
 
@@ -34,11 +34,11 @@
 </template>
 
 <script>
-import rechargeChart from './components/rechargeChart'   
+import withdrawChart from './components/withdrawChart'   
 export default {
     name: 'withdrawAnalysis',
     components: {
-        rechargeChart
+        withdrawChart
     },
     data() {
         return {

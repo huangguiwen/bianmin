@@ -14,16 +14,14 @@
                 <el-button type="primary">已使用额度</el-button>
                 <el-button type="primary">已使用账户数量</el-button>
             </el-button-group>
-            <recharge-chart></recharge-chart>
+            <account-general-chart></account-general-chart>
         </section>
         <section>
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column prop="date" label="日期"></el-table-column>
-                <el-table-column prop="name" label="充值次数"></el-table-column>
-                <el-table-column prop="name" label="充值金额"></el-table-column>
-                <el-table-column prop="name" label="到账金额"></el-table-column>
-                <el-table-column prop="name" label="待审核充值订单数量"></el-table-column>
-                <el-table-column prop="name" label="待审核充值订单总金额"></el-table-column>
+                <el-table-column prop="name" label="总额度"></el-table-column>
+                <el-table-column prop="name" label="已使用额度"></el-table-column>
+                <el-table-column prop="name" label="已使用账户数量"></el-table-column>
             </el-table>
         </section>
 
@@ -31,11 +29,11 @@
 </template>
 
 <script>
-import rechargeChart from './components/rechargeChart'   
+import accountGeneralChart from './components/accountGeneralChart'   
 export default {
     name: 'accountGeneral',
     components: {
-        rechargeChart
+        accountGeneralChart
     },
     data() {
         return {

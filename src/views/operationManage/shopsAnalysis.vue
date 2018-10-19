@@ -14,16 +14,14 @@
                 <el-button type="primary">已提现金额</el-button>
                 <el-button type="primary">未提现金额</el-button>
             </el-button-group>
-            <recharge-chart></recharge-chart>
+            <shops-chart></shops-chart>
         </section>
         <section>
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column prop="date" label="日期"></el-table-column>
-                <el-table-column prop="name" label="充值次数"></el-table-column>
-                <el-table-column prop="name" label="充值金额"></el-table-column>
-                <el-table-column prop="name" label="到账金额"></el-table-column>
-                <el-table-column prop="name" label="待审核充值订单数量"></el-table-column>
-                <el-table-column prop="name" label="待审核充值订单总金额"></el-table-column>
+                <el-table-column prop="name" label="商家数量"></el-table-column>
+                <el-table-column prop="name" label="已提现金额"></el-table-column>
+                <el-table-column prop="name" label="未提现金额"></el-table-column>
             </el-table>
         </section>
 
@@ -31,11 +29,11 @@
 </template>
 
 <script>
-import rechargeChart from './components/rechargeChart'   
+import shopsChart from './components/shopsChart'   
 export default {
     name: 'shopsAnalysis',
     components: {
-        rechargeChart
+        shopsChart
     },
     data() {
         return {

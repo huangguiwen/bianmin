@@ -158,7 +158,7 @@ export default {
     position: relative;
     .introduce {
         position: absolute;
-        left: 470px;
+        left: 550px;
         top: 250px;
         color: #fff;
         h3 { font-size: 30px; margin: 0; font-weight: 400; }

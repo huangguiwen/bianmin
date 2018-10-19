@@ -9,16 +9,20 @@
             <el-button type="primary" class="el-icon-search">搜索</el-button>
         </section>
         <section>
-            <recharge-chart></recharge-chart>
+            <account-amount-chart></account-amount-chart>
         </section>
         <section>
             <el-table :data="tableData" border style="width: 100%">
                 <el-table-column prop="date" label="日期"></el-table-column>
-                <el-table-column prop="name" label="充值次数"></el-table-column>
-                <el-table-column prop="name" label="充值金额"></el-table-column>
-                <el-table-column prop="name" label="到账金额"></el-table-column>
-                <el-table-column prop="name" label="待审核充值订单数量"></el-table-column>
-                <el-table-column prop="name" label="待审核充值订单总金额"></el-table-column>
+                <el-table-column prop="name" label="100-500额度"></el-table-column>
+                <el-table-column prop="name" label="500-1000额度"></el-table-column>
+                <el-table-column prop="name" label="1000-1500额度"></el-table-column>
+                <el-table-column prop="name" label="1500-2000额度"></el-table-column>
+                <el-table-column prop="name" label="2500-3000额度"></el-table-column>
+                <el-table-column prop="name" label="3000-4000额度"></el-table-column>
+                <el-table-column prop="name" label="4000-6000额度"></el-table-column>
+                <el-table-column prop="name" label="6000-7000额度"></el-table-column>
+                <el-table-column prop="name" label="7000-8000额度"></el-table-column>
             </el-table>
         </section>
 
@@ -26,11 +30,11 @@
 </template>
 
 <script>
-import rechargeChart from './components/rechargeChart'
+import accountAmountChart from './components/accountAmountChart'
 export default {
     name: 'accountAmount',
     components: {
-        rechargeChart
+        accountAmountChart
     },
     data() {
         return {
