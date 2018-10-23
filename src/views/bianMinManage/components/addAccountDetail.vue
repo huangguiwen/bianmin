@@ -183,7 +183,7 @@ export default {
                 }
                 this.searchIdentity = ''
                 this.ruleForm = {
-                    balance: 8000
+                    balance: 8000,
                 } 
             }
         }
@@ -227,7 +227,8 @@ export default {
                     account_type: this.ruleForm.accounType,
                     day_limit: this.ruleForm.dayLimit,
                     balance: this.ruleForm.balance,
-                    phone: this.ruleForm.phone
+                    phone: this.ruleForm.phone,
+                    name: this.ruleForm.name
                 }
                 if(this.ruleForm.accounType == 1) {
                     dataList = Object.assign(dataList, {

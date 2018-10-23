@@ -34,8 +34,8 @@
                     <el-radio v-model="ruleForm.checkResult" :label="1">通过注册</el-radio>
                     <el-radio v-model="ruleForm.checkResult" :label="-1">拒绝注册</el-radio>
                 </el-form-item>
-                <el-form-item label="每天额度:" prop="shop_day_limit">
-                    <el-input v-model="ruleForm.shop_day_limit"></el-input>
+                <el-form-item label="每天额度:" prop="day_limit">
+                    <el-input v-model="ruleForm.day_limit"></el-input>
                 </el-form-item>
                 <el-form-item label="银联卡充值手续费:" required v-if="ruleForm.checkResult == 1">
                     <el-col :span="8">
@@ -141,7 +141,7 @@ export default {
         return {
             dataList: {},
             checkResult: 1,
-            shop_day_limit: '',
+            day_limit: '',
             ruleForm: {
                 checkResult: 1,
                 note: '',
@@ -163,7 +163,7 @@ export default {
                 note: [
                     { required: true, message: '请输入审核意见', trigger: 'blur' }
                 ],
-                shop_day_limit: [
+                day_limit: [
                     { required: true, message: '请输入每天额度', trigger: 'blur' }
                 ],
                 cz_service_fee_per1: [
@@ -216,7 +216,7 @@ export default {
             this.ruleForm =  {
                 checkResult: 1,
                 checkAdvice: '',
-                shop_day_limit: this.dataList.conf[4].shop_day_limit,
+                day_limit: this.dataList.day_limit,
                 cz_service_fee_per1: this.dataList.conf[0].cz_service_fee_per,
                 cz_service_fee1: this.dataList.conf[0].cz_service_fee,
                 cz_service_fee_per2: this.dataList.conf[1].cz_service_fee_per,
@@ -266,7 +266,7 @@ export default {
                     id: this.dataList.id,
                     shop_id: this.dataList.shop_id,
                     status: this.ruleForm.checkResult,
-                    shop_day_limit: this.ruleForm.shop_day_limit,
+                    day_limit: this.ruleForm.day_limit,
                     conf: [{
                         type: 1,
                         shop_id: this.dataList.shop_id,

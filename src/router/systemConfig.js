@@ -4,21 +4,21 @@ export default {
     component: Layout,
     redirect: '/systemConfig/ruleSetting',
     name: 'systemConfig',
-    meta: { title: '系统管理', icon: 'example' },
+    meta: { title: '系统管理', icon: 'example', menu: true },
     children: [
         {
             path: 'baseSetting',
             name: 'baseSetting',
             hidden: false,
             component: () => import('@/views/systemConfig/baseSetting'),
-            meta: { title: '基础设置', icon: 'tree' }
+            meta: { title: '基础设置', icon: 'tree', menu: true }
         },
         {
             path: 'accountList',
             name: 'accountList',
             hidden: false,
             component: () => import('@/views/systemConfig/accountList'),
-            meta: { title: '账号列表', icon: 'tree' }
+            meta: { title: '账号列表', icon: 'tree', menu: true }
         },
         {
             path: 'ruleSetting',
@@ -30,9 +30,9 @@ export default {
         {
             path: 'menuManage',
             name: 'menuManage',
-            hidden: true,
+            hidden: false,
             component: () => import('@/views/systemConfig/menuManage'),
-            meta: { title: '菜单管理', icon: 'tree' }
+            meta: { title: '账号角色权限', icon: 'tree', menu: true }
         }
     ]
 }

@@ -239,7 +239,7 @@ export default {
             this.getDataList()
         },
         changeStatus(row) {
-            merchantManage.changeStatus({id: row.id, status: row.status == 1 ? -2 : 1 }).then(res => {
+            merchantManage.changeStatus({shop_id: row.id, status: row.status == 1 ? -2 : 1 }).then(res => {
                 if(res.code == 200) {
                     this.$message.success('修改成功！')
                     this.getDataList()

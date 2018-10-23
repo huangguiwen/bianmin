@@ -9,4 +9,8 @@ module.exports = merge(prodEnv, {
 
     BASE_API: '"http://192.168.0.51/HongGu/php"',
     UPLOAD_PATH:'"http://192.168.0.51/HongGu/php/admin/upload"',
+
+    // BASE_API: '"http://47.75.106.167/BM"',
+    // UPLOAD_PATH:'"http://47.75.106.167/BM/admin/upload"',
+
 })

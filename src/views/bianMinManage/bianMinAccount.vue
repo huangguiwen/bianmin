@@ -211,15 +211,16 @@ export default {
             this.visibleAddAccountFlag = true
             this.isEdit = false
             this.editData = null
+            
         },
         editAccount(row) {
             this.visibleAddAccountFlag = true
             this.isEdit = true
             this.editData = row
-            
         },
         changeFlag(value) {
             this.visibleAddAccountFlag = value
+            this.getDataList()
         },
         changeStatus(data) {
             let status = data.status == 1 ? 0 : 1

@@ -12,7 +12,7 @@ function getMerchantList(data) {
 // 获取商户审核信息
 function getCheckMessage(data) {
     return request({
-        url: '/admin/shops/getExanime',
+        url: '/admin/shops/edit',
         method: 'get',
         params: data
     })

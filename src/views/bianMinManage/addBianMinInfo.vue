@@ -15,8 +15,8 @@
             </el-form-item>
             <el-form-item label="性别" prop="sex">
                 <el-select v-model="ruleForm.sex" clearable placeholder="请选择">
-                    <el-option label="女" value="0"></el-option>
-                    <el-option label="男" value="1"></el-option>
+                    <el-option label="女" :value="0"></el-option>
+                    <el-option label="男" :value="1"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label="手机号码" prop="phone">
@@ -26,10 +26,10 @@
                 <select-area v-model="ruleForm.firstAddress"></select-area>
                 <el-input v-model="ruleForm.secondAddress" style="margin-top: 30px;" placeholder="请填写详细地址，请勿重复省市区信息"></el-input>
             </el-form-item>
-            <el-form-item label="指纹图片" prop="fingerPrint">
+            <el-form-item label="指纹图片">
                 <fileUpload :limit="1" :uploadedImg="ruleForm.fingerPrint" @successUpload="fingerPrintSuccess"></fileUpload>
             </el-form-item>
-            <el-form-item label="授权书附件" prop="authorization">
+            <el-form-item label="授权书附件">
                 <el-upload :action="uploadPath" :on-exceed="handleExceed" :limit="1" :on-success="authorizationChange" :file-list="ruleForm.authorization">
                     <el-button size="small" type="primary">点击上传</el-button>
                 </el-upload>
@@ -75,20 +75,20 @@ export default {
                 callback()
             }
         }
-        let validateFingerPrint = (rule, value, callback) => {
-            if (value.length == 0) {
-                return callback(new Error('请上传指纹图片！'));
-            } else {
-                callback()
-            }
-        }
-        let validateAuthorization = (rule, value, callback) => {
-            if (value.length == 0) {
-                return callback(new Error('请上传授权书附件！'));
-            } else {
-                callback()
-            }
-        }
+        // let validateFingerPrint = (rule, value, callback) => {
+        //     if (value.length == 0) {
+        //         return callback(new Error('请上传指纹图片！'));
+        //     } else {
+        //         callback()
+        //     }
+        // }
+        // let validateAuthorization = (rule, value, callback) => {
+        //     if (value.length == 0) {
+        //         return callback(new Error('请上传授权书附件！'));
+        //     } else {
+        //         callback()
+        //     }
+        // }
         
         return {
             id: 0,
@@ -129,12 +129,12 @@ export default {
                 phone: [
                     { required: true, message: '请输入手机号码', trigger: 'blur' }
                 ],
-                fingerPrint: [
-                    { required: true, validator: validateFingerPrint }
-                ],
-                authorization: [
-                    { required: true, validator: validateAuthorization }
-                ],
+                // fingerPrint: [
+                //     { required: true, validator: validateFingerPrint }
+                // ],
+                // authorization: [
+                //     { required: true, validator: validateAuthorization }
+                // ],
             }
         }
     },
@@ -221,7 +221,7 @@ export default {
                     phone: this.ruleForm.phone,
                     address: `${this.ruleForm.firstAddress}/${this.ruleForm.secondAddress}`,
                     fingerprint: this.ruleForm.fingerPrint[0],
-                    authorization: this.ruleForm.authorization[0].url,
+                    authorization: this.ruleForm.authorization[0] ? this.ruleForm.authorization[0].url : '',
                     attachment: this.ruleForm.attachment[0] ? this.ruleForm.attachment[0].url : '',
                     note: this.ruleForm.note
                 }

@@ -29,8 +29,8 @@
                 <el-form-item label="" prop="secondAddress">
                     <el-input type="textarea" v-model="ruleForm.secondAddress"></el-input>
                 </el-form-item>
-                <el-form-item label="每天额度:" prop="shop_day_limit">
-                    <el-input v-model="ruleForm.shop_day_limit"></el-input>
+                <el-form-item label="每天额度:" prop="day_limit">
+                    <el-input v-model="ruleForm.day_limit"></el-input>
                 </el-form-item>
                 <el-form-item label="银联卡充值手续费:" required>
                     <el-col :span="8">
@@ -139,7 +139,7 @@ export default {
     data() {
         return {
             dataList: {},
-            shop_day_limit: '',
+            day_limit: '',
             ruleForm: {
                 shop_name: '',
                 contact: '',
@@ -177,7 +177,7 @@ export default {
                 note: [
                     { required: true, message: '请输入审核意见', trigger: 'blur' }
                 ],
-                shop_day_limit: [
+                day_limit: [
                     { required: true, message: '请输入每天额度', trigger: 'blur' }
                 ],
                 cz_service_fee_per1: [
@@ -224,32 +224,36 @@ export default {
         }
     },
     watch: {
-        async id(value) {
-            await this.getDataList()
-            let addressArray = this.dataList.address.split(' ')
-            Object.assign(this.ruleForm, {
-                shop_name: this.dataList.shop_name,
-                contact: this.dataList.contact,
-                tel: this.dataList.tel,
-                secondAddress: addressArray.pop(),
-                firstAddress: addressArray.join('/'),
-                note: this.dataList.note,
-                checkAdvice: '',
-                shop_day_limit: this.dataList.conf[4].shop_day_limit,
-                cz_service_fee_per1: this.dataList.conf[0].cz_service_fee_per,
-                cz_service_fee1: this.dataList.conf[0].cz_service_fee,
-                cz_service_fee_per2: this.dataList.conf[1].cz_service_fee_per,
-                cz_service_fee2: this.dataList.conf[1].cz_service_fee,
-                cz_service_fee_per3: this.dataList.conf[2].cz_service_fee_per,
-                cz_service_fee3: this.dataList.conf[2].cz_service_fee,
-                cz_service_fee_per4: this.dataList.conf[3].cz_service_fee_per,
-                cz_service_fee4: this.dataList.conf[3].cz_service_fee,
-                tx_service_fee_per: this.dataList.conf[0].tx_service_fee_per,
-                tx_service_fee: this.dataList.conf[0].tx_service_fee,
-            })   
+        async editDialog(value) {
+            if(value) {
+                await this.getDataList()
+                let addressArray = this.dataList.address.split(' ')
+                Object.assign(this.ruleForm, {
+                    shop_name: this.dataList.shop_name,
+                    contact: this.dataList.contact,
+                    tel: this.dataList.tel,
+                    secondAddress: addressArray.pop(),
+                    firstAddress: addressArray.join('/'),
+                    note: this.dataList.note,
+                    checkAdvice: '',
+                    day_limit: this.dataList.day_limit,
+                    cz_service_fee_per1: this.dataList.conf[0].cz_service_fee_per,
+                    cz_service_fee1: this.dataList.conf[0].cz_service_fee,
+                    cz_service_fee_per2: this.dataList.conf[1].cz_service_fee_per,
+                    cz_service_fee2: this.dataList.conf[1].cz_service_fee,
+                    cz_service_fee_per3: this.dataList.conf[2].cz_service_fee_per,
+                    cz_service_fee3: this.dataList.conf[2].cz_service_fee,
+                    cz_service_fee_per4: this.dataList.conf[3].cz_service_fee_per,
+                    cz_service_fee4: this.dataList.conf[3].cz_service_fee,
+                    tx_service_fee_per: this.dataList.conf[0].tx_service_fee_per,
+                    tx_service_fee: this.dataList.conf[0].tx_service_fee,
+                })
+            }  
         },
         showFlag() {
-            this.$refs.ruleForm.clearValidate()
+            if(this.$refs.ruleForm) {
+                this.$refs.ruleForm.clearValidate()
+            }
         }
     },
     computed: {
@@ -288,27 +292,31 @@ export default {
                     contact: this.ruleForm.contact,
                     tel: this.ruleForm.tel,
                     address: `${this.ruleForm.firstAddress}/${this.ruleForm.secondAddress}`,
-                    shop_day_limit: this.ruleForm.shop_day_limit,
+                    day_limit: this.ruleForm.day_limit,
                     conf: [{
                         type: 1,
-                        shop_id: this.dataList.shop_id,
+                        shop_id: this.dataList.id,
+                        id: this.dataList.conf[0].id,
                         cz_service_fee_per: this.ruleForm.cz_service_fee_per1,
                         cz_service_fee: this.ruleForm.cz_service_fee1,
                         tx_service_fee_per: this.ruleForm.tx_service_fee_per,
                         tx_service_fee: this.ruleForm.tx_service_fee
                     },{
                         type: 2,
-                        shop_id: this.dataList.shop_id,
+                        shop_id: this.dataList.id,
+                        id: this.dataList.conf[1].id,
                         cz_service_fee_per: this.ruleForm.cz_service_fee_per2,
                         cz_service_fee: this.ruleForm.cz_service_fee2
                     },{
                         type: 3,
-                        shop_id: this.dataList.shop_id,
+                        shop_id: this.dataList.id,
+                        id: this.dataList.conf[2].id,
                         cz_service_fee_per: this.ruleForm.cz_service_fee_per3,
                         cz_service_fee: this.ruleForm.cz_service_fee3
                     },{
                         type: 4,
-                        shop_id: this.dataList.shop_id,
+                        shop_id: this.dataList.id,
+                        id: this.dataList.conf[3].id,
                         cz_service_fee_per: this.ruleForm.cz_service_fee_per4,
                         cz_service_fee: this.ruleForm.cz_service_fee4
                     }],

@@ -5,13 +5,13 @@ export default {
     redirect: '/fundsManage/rechargeManage',
     name: 'fundsManage  ',
     hidden: false,
-    meta: { title: '资金管理', icon: 'example' },
+    meta: { title: '资金管理', icon: 'example', menu: true },
     children: [
         {
             path: 'rechargeManage',
             name: 'rechargeManage',
             component: () => import('@/views/fundsManage/rechargeManage'),
-            meta: { title: '充值管理', icon: 'tree' },
+            meta: { title: '充值管理', icon: 'tree', menu: true},
         },{
             path: 'rechargeCheckDetail',
             name: 'rechargeCheckDetail',
@@ -28,7 +28,7 @@ export default {
             path: 'withdrawManage',
             name: 'withdrawManage',
             component: () => import('@/views/fundsManage/withdrawManage'),
-            meta: { title: '提现管理', icon: 'tree' },
+            meta: { title: '提现管理', icon: 'tree', menu: true },
         },{
             path: 'withdrawDispose',
             name: 'withdrawDispose',
