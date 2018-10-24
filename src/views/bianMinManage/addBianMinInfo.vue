@@ -61,6 +61,16 @@ export default {
         fileUpload
     },
     data() {
+        let validateIdentityNum = (rule, value, callback) => {
+            let reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/
+            if (value.length == 0) {
+                return callback(new Error('请输入身份证号码！'))
+            } else if(!reg.test(value)) { 
+                callback(new Error('身份证号码不合法！'))
+            } else {
+                callback()
+            }
+        }
         let validateIdentytyImgFront = (rule, value, callback) => {
             if (value.length == 0) {
                 return callback(new Error('请上传身份证正面图片！'));
@@ -71,6 +81,16 @@ export default {
         let validateIdentytyImgBack = (rule, value, callback) => {
             if (value.length == 0) {
                 return callback(new Error('请上传身份证反面图片！'));
+            } else {
+                callback()
+            }
+        }
+        let validatePhone = (rule, value, callback) => {
+            let reg = /^1[34578]\d{9}$/
+            if (value.length == 0) {
+                return callback(new Error('请输入手机号码！'))
+            } else if(!reg.test(value)) { 
+                callback(new Error('手机号码不合法！'))
             } else {
                 callback()
             }
@@ -112,7 +132,7 @@ export default {
             },
             rules: {
                 identityNum: [
-                    { required: true, message: '请输入身份证号码', trigger: 'blur' }
+                    { required: true, validator: validateIdentityNum }
                 ],
                 identytyImgFront: [
                     { required: true, validator: validateIdentytyImgFront }
@@ -127,7 +147,7 @@ export default {
                     { required: true, message: '请选择性别', trigger: 'change' }
                 ],
                 phone: [
-                    { required: true, message: '请输入手机号码', trigger: 'blur' }
+                    { required: true, validator: validatePhone }
                 ],
                 // fingerPrint: [
                 //     { required: true, validator: validateFingerPrint }

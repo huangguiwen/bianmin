@@ -12,7 +12,7 @@
                     <p>商户名称：{{ messageList.shop_name }}</p>
                     <p>收取手续费：{{ messageList.service_fee }}</p>
                     <p>户名：{{ messageList.bank_username }}</p>
-                    <p>状态：{{ messageList.status }}</p>
+                    <p>状态：{{ messageList.status | statusFilter }}</p>
                 </div>
                 <div>
                     <p>手续费成本：{{ messageList.cost_fee }}</p>
@@ -63,7 +63,11 @@
             <el-table :data="dataList" max-height="400">
                 <el-table-column label="账户ID" prop="zh_id"></el-table-column>
                 <el-table-column label="户名" prop="name"></el-table-column>
-                <el-table-column label="类型" prop="account_type"></el-table-column>
+                <el-table-column label="类型" prop="account_type">
+                    <template slot-scope="scope">
+                        <el-tag>{{ scope.row.account_type | accounType }}</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="账号" prop="account"></el-table-column>
                 <el-table-column label="账户余额" prop="balance">
                     <template slot-scope="scope">
@@ -94,7 +98,11 @@
             <el-table :data="selectedDataList" max-height="400">
                 <el-table-column label="账户ID" prop="zh_id"></el-table-column>
                 <el-table-column label="户名" prop="name"></el-table-column>
-                <el-table-column label="类型" prop="account_type"></el-table-column>
+                <el-table-column label="类型" prop="account_type">
+                    <template slot-scope="scope">
+                        <el-tag>{{ scope.row.account_type | accounType }}</el-tag>
+                    </template>
+                </el-table-column>
                 <el-table-column label="账号" prop="account"></el-table-column>
                 <el-table-column label="账户余额" prop="balance">
                     <template slot-scope="scope">
@@ -161,6 +169,36 @@ export default {
         this.searchForm.id = this.$route.query.id
         this.getDataList()
     },
+    filters: {
+        statusFilter(value) {
+            switch(value) {
+                case -2: 
+                    return '拒绝提现'
+                case -1: 
+                    return '关闭提现'
+                case 0: 
+                    return '待审核提现'
+                case 1: 
+                    return '待商户确认'
+                case 2: 
+                    return '待处理提现'
+                case 3: 
+                    return '处理完成'
+            }
+        },
+        accounType(value) {
+            switch(value) {
+                case 1: 
+                    return '银联卡'
+                case 2: 
+                    return '支付宝'
+                case 3: 
+                    return '微信'
+                case 4: 
+                    return 'Q码'
+            }
+        },
+    },
     methods: {
         getDataList() {
             new Promise(resolve => {
@@ -179,7 +217,6 @@ export default {
             })
         },
         selectData(data) {
-            console.log(data)
             this.selectedDataList.push(data)
             this.dataList = this.dataList.filter(item => {
                 return item.id != data.id
@@ -234,17 +271,18 @@ export default {
                         this.$confirm('是否确定打款?', '提示', {
                             confirmButtonText: '确定',
                             cancelButtonText: '取消',
-                            type: 'warning'
-                            }).then(() => {
-                            this.$message({
-                                type: 'success',
-                                message: '提交成功！'
-                            });
+                            type: 'warning'})
+                            .then(() => {
+                                this.$message({
+                                    type: 'success',
+                                    message: '提交成功！'
+                                })
+                                this.$router.push({ name: 'withdrawManage' })
                             }).catch(() => {
-                            this.$message({
-                                type: 'info',
-                                message: '已取消操作'
-                            })     
+                                this.$message({
+                                    type: 'info',
+                                    message: '已取消操作'
+                                })     
                         })
                     } 
                 })

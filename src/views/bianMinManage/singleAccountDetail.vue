@@ -162,6 +162,7 @@ export default {
         }
     },
     created() {
+        this.searchForm.account_id = this.$route.query.id
         bianMinManage.getOverViewList({ id: this.$route.query.id }).then(res =>{
             if(res.code == 200) {
                 this.dataList1 = res.data.list

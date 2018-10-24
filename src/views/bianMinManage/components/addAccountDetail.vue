@@ -66,7 +66,7 @@
                     <el-input placeholder="请输入每日额度" v-model="ruleForm.dayLimit"></el-input>
                 </el-form-item>
                 <el-form-item label="初始余额" prop="balance">
-                    <el-input placeholder="请输入初始余额" v-model="ruleForm.balance"></el-input>
+                    <el-input type="number" placeholder="请输入初始余额" v-model="ruleForm.balance"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
@@ -81,6 +81,16 @@
 import bianMinManage from '@/api/bianMinManage'
 export default {
     data() {
+        let validatePhone = (rule, value, callback) => {
+            let reg = /^1[34578]\d{9}$/
+            if (value.length == 0) {
+                return callback(new Error('请输入手机号码！'))
+            } else if(!reg.test(value)) { 
+                callback(new Error('手机号码不合法！'))
+            } else {
+                callback()
+            }
+        }
         return {
             addAccountFlag: false,
             uploadPath: process.env.UPLOAD_PATH,
@@ -100,11 +110,11 @@ export default {
                 password: '',
                 moneyQR: '',
                 dayLimit: '',
-                balance: 8000
+                balance: '0'
             },
             rules: {
                 phone: [
-                    { required: true, message: '请输入手机号', trigger: 'blur' },
+                    { required: true, validator: validatePhone }
                 ],
                 accounType: [
                     { required: true, message: '请输入账号类型', trigger: 'change' },
@@ -146,7 +156,25 @@ export default {
             this.addAccountFlag = value
         },
         addAccountFlag(value) {
+            if(this.$refs.ruleForm) {
+                this.$refs.ruleForm.clearValidate()
+            }
+            this.searchIdentity = ''
+            this.ruleForm = {
+                identityNum: '',
+                bainMinId: '',
+                name: '',
+                phone: '',
+                accounType: '',
+                account: '',
+                bank: '',
+                password: '',
+                moneyQR: '',
+                dayLimit: '',
+                balance: '0'
+            }
             this.$emit('changeFlag', value)
+            
         },
         searchIdentity(value) {
             let selectedBainMin = this.bainMinList.filter(item => {
@@ -183,7 +211,7 @@ export default {
                 }
                 this.searchIdentity = ''
                 this.ruleForm = {
-                    balance: 8000,
+                    balance: '0',
                 } 
             }
         }

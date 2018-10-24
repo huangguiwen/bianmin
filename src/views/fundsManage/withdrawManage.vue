@@ -163,6 +163,7 @@ export default {
         },
         checkFlagChange(value) {
             this.checkFlag = value
+            this.getDataList()
         },
         audit(id) {
             this.id = id
