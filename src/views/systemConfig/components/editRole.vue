@@ -1,12 +1,12 @@
 <template>
     <div class="app-container">
         <el-dialog title="添加角色" width="40%" :visible.sync="componentMenuFlag">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" :inline="true">
-                <el-form-item label="角色名称">
-                    <el-input placeholder="请输入角色名称"></el-input>
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="90px">
+                <el-form-item label="角色名称:" prop="name">
+                    <el-input placeholder="请输入角色名称" v-model="ruleForm.name"></el-input>
                 </el-form-item>
-                <el-form-item label="角色描述">
-                    <el-input type="textarea" placeholder="请输入角色描述"></el-input>
+                <el-form-item label="角色描述:">
+                    <el-input type="textarea" placeholder="请输入角色描述" v-model="ruleForm.note"></el-input>
                 </el-form-item>
             </el-form>
             <div class="flexbox">
@@ -27,7 +27,7 @@
             
             <span slot="footer" class="dialog-footer">
                 <el-button @click="cancel">取 消</el-button>
-                <el-button type="primary" @click="submit">确 定</el-button>
+                <el-button type="primary" @click="edit">确 定</el-button>
             </span>
         </el-dialog>
     </div>
@@ -35,15 +35,18 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import systemConfig from 'api/systemConfig'
 export default {
     data() {
         return {
             componentMenuFlag: false,
             menuId: 0,
+            checkedKeys: [],
             selectedArray: [],
             menuArray: [],
             ruleForm: {
-                
+                name: '',
+                note: ''
             },
             rules: {
                 name: [
@@ -66,17 +69,36 @@ export default {
         }
     },
     props: {
-        menuFlag: {
+        editRoleFlag: {
             type: Boolean,
             default: true
         },
+        editId: {
+            type: Number,
+            default: 0
+        }
     },
     watch: {
-       menuFlag(value) {
+       editRoleFlag(value) {
            this.componentMenuFlag = value
        },
        componentMenuFlag(value) {
-           this.$emit('changeMenu', value)
+           this.$emit('editMenuChange', value)
+       },
+       editId(value) {
+           systemConfig.getAuth({ id: this.editId }).then(res => {
+                if(res.code == 200) {
+                    this.checkedKeys = res.data.list[0].auth_list.map(item => item.id)
+                    this.ruleForm = {
+                        id: this.editId,
+                        name: res.data.list[0].name,
+                        note: res.data.list[0].note,
+                        auth_list: res.data.list[0].auth_list,
+                    }
+                    this.$refs.tree.setCheckedKeys(this.checkedKeys)
+                    this.selectedArray = res.data.list[0].auth_list
+                }
+            })
        }
     },
     created() {
@@ -103,8 +125,14 @@ export default {
             
             this.componentMenuFlag = false
         },
-        submit() {
-            this.componentMenuFlag = false
+        edit() {
+            this.ruleForm.auth_list = this.selectedArray
+            systemConfig.editAuth(this.ruleForm).then(res => {
+                if(res.code == 200) {
+                    this.$message.success('编辑成功！')
+                    this.componentMenuFlag = false
+                }
+            })
         },
         // 获取所有可以显示的子菜单
         filterChildren(children) {
@@ -149,6 +177,8 @@ export default {
             border: 1px solid #eee;
             margin: 5px;
             padding: 15px;
+            max-height: 300px;
+            overflow: auto;
         }
         .right {
             h4 {
@@ -168,11 +198,12 @@ export default {
                     text-align: right;
                 }
             }
-            
             flex: 1;
             border: 1px solid #eee;
             margin: 5px;
             padding: 15px;
+            max-height: 300px;
+            overflow: auto;
         }
     }
 }

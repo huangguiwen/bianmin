@@ -6,9 +6,9 @@ export function login(username, password) {
         url: '/admin/base/login',
         method: 'post',
         data: {
-        isRemember: 0,
-        username,
-        password
+            isRemember: 0,
+            username,
+            password
         }
     })
 }

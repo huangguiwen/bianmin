@@ -138,7 +138,7 @@ export default {
             if(data && data.userInfo.login_count == 1) {
               this.$router.push({ name: 'firstLogin' })
             } else {
-              this.$router.push({ name: 'bianMinInfo' })  
+              this.$router.push({ name: 'home' })  
             }
           }).catch(() => {
             this.loading = false

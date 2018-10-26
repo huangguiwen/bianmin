@@ -12,12 +12,12 @@
             </el-form-item>
         </el-form>
         <el-table :data="dataList">
-            <el-table-column label="角色名称" prop="username"></el-table-column>
-            <el-table-column label="角色描述" prop="realname"></el-table-column>
+            <el-table-column label="角色名称" prop="name"></el-table-column>
+            <el-table-column label="角色描述" prop="note"></el-table-column>
             <el-table-column label="操作" prop="title">
                 <template slot-scope="scope">
-                    <el-button type="primary" size="small">编辑</el-button>
-                    <el-button type="success" size="small">删除</el-button>
+                    <el-button type="primary" size="small" @click="editRole(scope.row.id)">编辑</el-button>
+                    <!-- <el-button type="success" size="small">删除</el-button> -->
                 </template>
             </el-table-column>
         </el-table>
@@ -25,20 +25,26 @@
             :total="searchForm.dataCount" layout="total, prev, pager, next, jumper">
         </el-pagination>
 
-        <select-menu-permissions :menuFlag="menuFlag" @changeMenu="changeMenu"></select-menu-permissions>
+        <add-role :addRoleFlag="addRoleFlag" @addMenuChange="addMenuChange"></add-role>
+        <edit-role :editRoleFlag="editRoleFlag" @editMenuChange="editMenuChange" :editId="editId"></edit-role>
     </div>
 </template>
 
 <script>
-import selectMenuPermissions from './components/selectMenuPermissions'
+import addRole from './components/addRole'
+import editRole from './components/editRole'
+import systemConfig from 'api/systemConfig'
 export default {
     name: 'menuManage',
     components: {
-        selectMenuPermissions
+        addRole,
+        editRole
     },
     data() {
         return {
-            menuFlag: false,
+            editId: 0,
+            addRoleFlag: false,
+            editRoleFlag: false,
             dataList: [{
 
             }],
@@ -49,15 +55,34 @@ export default {
             }
         }
     },
+    created() {
+        this.getDataList()
+    },
     methods: {
+        getDataList() {
+            systemConfig.getAuth().then(res => {
+                if(res.code == 200) {
+                    this.dataList = res.data.list
+                }
+            })
+        },
         handleCurrentChange(value) {
             this.searchForm.page = value
         },
         addRole() {
-            this.menuFlag = true
+            this.addRoleFlag = true
         },
-        changeMenu(value) {
-            this.menuFlag = value
+        editRole(id) {
+            this.editId = id
+            this.editRoleFlag = true
+        },
+        addMenuChange(value) {
+            this.addRoleFlag = value
+            this.getDataList()
+        },
+        editMenuChange(value) {
+            this.editRoleFlag = value
+            this.getDataList()
         }
     }
 }

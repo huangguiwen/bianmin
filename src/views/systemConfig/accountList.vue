@@ -10,15 +10,11 @@
             <el-form-item label="手机号码">
                 <el-input placeholder="请输入账号" v-model="searchForm.phone"></el-input>
             </el-form-item>
-            <!-- <el-form-item label="角色">
-                <el-select clearable placeholder="请选择角色">
-                    <el-option value="1" label="公司管理员"></el-option>
-                    <el-option value="2" label="普通管理员"></el-option>
-                    <el-option value="3" label="考勤管理员"></el-option>
-                    <el-option value="4" label="行政人员"></el-option>
-                    <el-option value="5" label="公司领导"></el-option>
+            <el-form-item label="角色">
+                <el-select clearable placeholder="请选择角色" v-model="searchForm.auth_id">
+                    <el-option v-for="(item, index) in rolesList" :key="index" :value="item.id" :label="item.name"></el-option>
                 </el-select>
-            </el-form-item> -->
+            </el-form-item>
             <el-form-item label="状态">
                 <el-select clearable placeholder="请选择状态" v-model="searchForm.status">
                     <el-option value="1" label="启用"></el-option>
@@ -36,7 +32,7 @@
             <el-table-column label="账号" prop="username"></el-table-column>
             <el-table-column label="姓名" prop="realname"></el-table-column>
             <el-table-column label="手机号码" prop="phone"></el-table-column>
-            <!-- <el-table-column label="角色" prop="status"></el-table-column> -->
+            <el-table-column label="角色" prop="auth_name"></el-table-column>
             <el-table-column label="状态" prop="status">
                 <template slot-scope="scope">
                     <el-tag>{{ scope.row.status == 1 ? '启用' : '停用' }}</el-tag>
@@ -67,11 +63,9 @@
                 <el-form-item label="姓名" prop="realname">
                     <el-input v-model="ruleForm.realname"></el-input>
                 </el-form-item>
-                <!-- <el-form-item label="角色">
-                    <el-checkbox>系统管理员</el-checkbox>
-                    <el-checkbox>运营管理员</el-checkbox>
-                    <el-checkbox v-if="isEdit">财务员</el-checkbox>
-                </el-form-item> -->
+                <el-form-item label="角色" prop="auth_id">
+                    <el-radio v-for="(item, index) in rolesList" :key="index"  v-model="ruleForm.auth_id" :label="item.id">{{ item.name }}</el-radio>
+                </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
                 <el-button type="primary" @click="submitData">确 定</el-button>
@@ -89,7 +83,8 @@ export default {
         return {
             editAccountFlag: false,
             isEdit: false,
-            dataList: [{}],
+            rolesList: [],
+            dataList: [],
             searchForm: {
                 page: 1,
                 limit: 10,
@@ -99,7 +94,8 @@ export default {
                 username: '',
                 password: '',
                 phone: '',
-                realname: ''
+                realname: '',
+                auth_id: ''
             },
             rules: {
                 username: [
@@ -113,11 +109,19 @@ export default {
                 ],
                 realname: [
                     { required: true, message: '请输入姓名', trigger: 'blur' },
-                ]
+                ],
+                auth_id: [
+                    { required: true, message: '请选择角色', trigger: 'change' },
+                ],
             }
         }
     },
     created() {
+        systemConfig.getAuth().then(res => {
+            if(res.code == 200) {
+                this.rolesList = res.data.list
+            }
+        })
         this.getDataList()
     },
     methods: {
@@ -150,7 +154,8 @@ export default {
                 username: data.username,
                 phone: data.phone,
                 realname: data.realname,
-                id: data.id
+                id: data.id,
+                auth_id: data.auth_id
             })
             
             this.isEdit = true

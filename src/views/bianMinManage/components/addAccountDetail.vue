@@ -15,7 +15,7 @@
                     <el-input placeholder="请输入手机号" v-model="ruleForm.phone"></el-input>
                 </el-form-item>
                 <el-form-item label="账号类型" prop="accounType">
-                    <el-select v-model="ruleForm.accounType" @change="handleAccountTypeChange" placeholder="请选择">
+                    <el-select v-model="ruleForm.accounType" @change="handleAccountTypeChange(ruleForm.accounType)" placeholder="请选择">
                         <el-option label="银联卡" :value="1"></el-option>
                         <el-option label="支付宝" :value="2"></el-option>
                         <el-option label="微信" :value="3"></el-option>
@@ -220,7 +220,12 @@ export default {
         changeVisibleAddAccountFlag() {
             this.$emit('changeFlag', false)
         },
-        handleAccountTypeChange() {
+        handleAccountTypeChange(type) {
+            if(type == 1) {
+                this.ruleForm.dayLimit = 1000000
+            } else {
+                this.ruleForm.dayLimit = ''
+            }
             this.$refs.ruleForm.clearValidate()
         },
         handleAvatarSuccess(res, file) {

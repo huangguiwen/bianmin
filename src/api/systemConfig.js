@@ -52,6 +52,33 @@ function updateMerchant(data) {
     })
 }
 
+// 获取菜单权限数据
+function getAuth(data) {
+    return request({
+        url: '/admin/auth',
+        method: 'get',
+        params: data
+    })
+}
+
+// 提交菜单权限数据
+function submitAuth(data) {
+    return request({
+        url: '/admin/auth',
+        method: 'post',
+        data: data
+    })
+}
+
+// 编辑菜单权限数据
+function editAuth(data) {
+    return request({
+        url: '/admin/auth/updatedata',
+        method: 'post',
+        data: data
+    })
+}
+
 
 export default {
     getRuleSettingList,
@@ -59,5 +86,8 @@ export default {
     getMerchantList,
     updateMerchant,
     addUser,
-    updateDataUser
+    updateDataUser,
+    getAuth,
+    submitAuth,
+    editAuth
 }

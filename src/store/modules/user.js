@@ -60,13 +60,11 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
+        logout(state.authKey).then(() => {
           commit('SET_AUTHKEY', '')
           commit('SET_USERINFO', [])
           removeAuthKey()
           resolve()
-        }).catch(error => {
-          reject(error)
         })
       })
     },
@@ -75,6 +73,7 @@ const user = {
     FedLogOut({ commit }) {
       return new Promise(resolve => {
         commit('SET_AUTHKEY', '')
+        commit('SET_USERINFO', [])
         removeAuthKey()
         resolve()
       })

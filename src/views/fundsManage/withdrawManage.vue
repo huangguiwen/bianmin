@@ -38,7 +38,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" class="el-icon-search" @click="searchData">搜索</el-button>
-                <el-button type="primary" class="el-icon-edit-outline">导出数据</el-button>
+                <!-- <el-button type="primary" class="el-icon-edit-outline">导出数据</el-button> -->
             </el-form-item>
         </el-form>
         <el-table :data="dataList">

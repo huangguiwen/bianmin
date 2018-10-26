@@ -2,7 +2,7 @@ import Layout from '../views/layout/Layout'
 export default {
     path: '/login',
     component: Layout,
-    redirect: '/login/firstLogin',
+    redirect: '/login',
     name: 'login',
     hidden: true,
     meta: { title: '登录', icon: 'example' },

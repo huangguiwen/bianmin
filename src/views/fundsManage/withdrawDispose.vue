@@ -260,6 +260,17 @@ export default {
             
         },
         submitData() {
+            let returnFlag = false
+            this.selectedDataList.forEach(item => {
+                if(item.fee < 0) {
+                    this.$message.error('取款金额不能为负数！')
+                    returnFlag = true
+                    return false
+                }
+            })
+            if(returnFlag) {
+                return false
+            }
             let saveData = {
                 id: this.$route.query.id,
                 list: this.selectedDataList,
