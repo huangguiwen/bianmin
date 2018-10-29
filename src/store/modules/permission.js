@@ -2,7 +2,7 @@ import { asyncRouterMap, constantRouterMap } from '@/router'
 import router from '@/router'
 import permissionResolver from 'utils/permissionResolver'
 import axios from 'axios' 
-import { getUserInfo } from 'utils/auth'
+import { getUserInfo, getAuthList } from 'utils/auth'
 
 const permission = {
     state: {
@@ -27,7 +27,7 @@ const permission = {
     actions:{
         generateRoutes({ commit }) {
             return new Promise(resolve => {
-                let userPerms = getUserInfo().auth_list.map(item => item.name)
+                let userPerms = getAuthList().map(item => item.name)
                 commit('set_roles', userPerms)
                 asyncRouterMap.forEach(router => {
                     router.fullPath = router.path

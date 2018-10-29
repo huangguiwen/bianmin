@@ -3,7 +3,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import ElementUI from 'element-ui'
-import { getAuthKey } from '@/utils/auth'
+import { getAuthKey, getUserInfo } from '@/utils/auth'
 
 import 'normalize.css/normalize.css'// A modern alternative to CSS resets
 import 'element-ui/lib/theme-chalk/index.css'
@@ -18,7 +18,7 @@ Vue.use(ElementUI)
 
 Vue.config.productionTip = false
 
-if(getAuthKey()){
+if(getAuthKey() && getUserInfo()){
     store.dispatch('generateRoutes')
 }
 

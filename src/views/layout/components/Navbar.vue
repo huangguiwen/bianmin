@@ -18,7 +18,7 @@
         </el-dropdown> -->
         <div class="top-bar">
             <!-- <span class="el-icon-message">(321)</span> -->
-            <span @click="gotoAccountManage">{{ userInfo.realname }}</span>
+            <!-- <span @click="gotoAccountManage">{{ userInfo.realname }}</span> -->
             <el-button type="primary" size="mini" @click="logout" class="logout">退出</el-button>
         </div>
     </el-menu>

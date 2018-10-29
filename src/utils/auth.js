@@ -3,8 +3,7 @@ import Cookies from 'js-cookie'
 const AUTHKEY = 'token'
 const SESSIONID = 'sessionId'
 const USERINFO = 'userInfo'
-const PERMISSION = 'menu'
-
+const AUTHLIST = 'authList'
 
 export function getAuthKey() {
   return Cookies.get(AUTHKEY)
@@ -40,6 +39,14 @@ export function setUserInfo(data) {
 
 export function removeUserInfo() {
     return Cookies.remove(USERINFO)
+}
+
+export function getAuthList() {
+    return Cookies.getJSON(AUTHLIST)
+}
+
+export function setAuthList(data) {
+    return Cookies.set(AUTHLIST, data)
 }
 
 
