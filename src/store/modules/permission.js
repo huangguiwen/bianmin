@@ -2,6 +2,7 @@ import { asyncRouterMap, constantRouterMap } from '@/router'
 import router from '@/router'
 import permissionResolver from 'utils/permissionResolver'
 import axios from 'axios' 
+import { getUserInfo } from 'utils/auth'
 
 const permission = {
     state: {
@@ -20,22 +21,23 @@ const permission = {
             }
         },
         set_roles: (state, roles) => {
-          state.roles = roles
+            state.roles = roles
         }
     },
     actions:{
         generateRoutes({ commit }) {
             return new Promise(resolve => {
-                axios.post("/admin/permission").then(res=>{
-                    commit('set_roles', res.data)
-                    asyncRouterMap.forEach(router => {
-                        router.fullPath = router.path
-                        checkChildPerm(res.data, router)
-                        setChildFullPath(router)
-                    })
-                    commit("setRoutes", asyncRouterMap)
+                let userPerms = getUserInfo().auth_list.map(item => item.name)
+                commit('set_roles', userPerms)
+                asyncRouterMap.forEach(router => {
+                    router.fullPath = router.path
+                    checkChildPerm(userPerms, router)
+                    setChildFullPath(router)
                 })
+                commit("setRoutes", asyncRouterMap)
                 resolve()
+            }).catch((err) => {
+                console.log(err)
             })
         }
     }

@@ -11,12 +11,12 @@ export default {
             path: 'merchantInfo',
             name: 'merchantInfo',
             component: () => import('@/views/merchantManage/merchantInfo'),
-            meta: { title: '商户信息', icon: 'tree', menu: true },
+            meta: { title: '商户信息', icon: 'tree', menu: true, perm: 'merchantInfo' },
         },{
             path: 'shopAccountDetail',
             name: 'shopAccountDetail',
             component: () => import('@/views/merchantManage/shopAccountDetail'),
-            meta: { title: '账户明细', icon: 'tree', menu: true },
+            meta: { title: '账户明细', icon: 'tree', menu: true, perm: 'shopAccountDetail' },
         },
         {
             path: 'merchantDetail',

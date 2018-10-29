@@ -11,17 +11,17 @@ export default {
             path: 'bianMinInfo',
             name: 'bianMinInfo',
             component: () => import('@/views/bianMinManage/bianMinInfo'),
-            meta: { title: '边民信息', icon: 'tree', menu: true }
+            meta: { title: '边民信息', icon: 'tree', menu: true, perm: 'bianMinInfo' }
         },{   
             path: 'bianMinAccount',
             name: 'bianMinAccount',
             component: () => import('@/views/bianMinManage/bianMinAccount'),
-            meta: { title: '边民账户列表', icon: 'tree', menu: true }
+            meta: { title: '边民账户列表', icon: 'tree', menu: true, perm: 'bianMinAccount' }
         },{   
             path: 'accountOverview',
             name: 'accountOverview',
             component: () => import('@/views/bianMinManage/accountOverview'),
-            meta: { title: '边民账户概览', icon: 'tree', menu: true }
+            meta: { title: '边民账户概览', icon: 'tree', menu: true, perm: 'accountOverview' }
         },{   
             path: 'singleAccountDetail',
             name: 'singleAccountDetail',

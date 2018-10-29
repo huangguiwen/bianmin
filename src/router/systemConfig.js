@@ -11,14 +11,14 @@ export default {
             name: 'baseSetting',
             hidden: false,
             component: () => import('@/views/systemConfig/baseSetting'),
-            meta: { title: '基础设置', icon: 'tree', menu: true }
+            meta: { title: '基础设置', icon: 'tree', menu: true, perm: 'baseSetting' }
         },
         {
             path: 'accountList',
             name: 'accountList',
             hidden: false,
             component: () => import('@/views/systemConfig/accountList'),
-            meta: { title: '账号列表', icon: 'tree', menu: true }
+            meta: { title: '账号列表', icon: 'tree', menu: true, perm: 'accountList' }
         },
         {
             path: 'ruleSetting',
@@ -32,7 +32,7 @@ export default {
             name: 'menuManage',
             hidden: false,
             component: () => import('@/views/systemConfig/menuManage'),
-            meta: { title: '账号角色权限', icon: 'tree', menu: true }
+            meta: { title: '账号角色权限', icon: 'tree', menu: true, perm: 'menuManage' }
         }
     ]
 }

@@ -135,12 +135,13 @@ export default {
               Cookies.set('password', Base64.encode(this.loginForm.password), { expires: 7 })
             }
             this.loading = false
+            console.log(data)
             if(data && data.userInfo.login_count == 1) {
               this.$router.push({ name: 'firstLogin' })
             } else {
-              this.$router.push({ name: 'home' })  
+              this.$router.push({ path: '/' })  
             }
-          }).catch(() => {
+          }).catch((error) => {
             this.loading = false
           })
         } else {

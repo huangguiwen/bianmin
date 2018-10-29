@@ -1,5 +1,5 @@
 import { login, logout, getInfo } from '@/api/login'
-import { getAuthKey, setAuthKey, removeAuthKey, getSessionId, setSessionId, getUserInfo, setUserInfo } from '@/utils/auth'
+import { getAuthKey, setAuthKey, removeAuthKey, getSessionId, setSessionId, getUserInfo, setUserInfo, setPermission,getPermission } from '@/utils/auth'
 // import axios from 'axios' 
 
 const user = {
@@ -23,10 +23,10 @@ const user = {
 
   actions: {
     // 登录
-    Login({ commit }, userInfo) {
+    Login({ dispatch, commit, getters }, userInfo) {
       const username = userInfo.username.trim()
       return new Promise((resolve, reject) => {
-        login(username, userInfo.password).then(response => {
+        login(username, userInfo.password).then(async response => {
           const data = response.data
           setAuthKey(data.authKey)
           commit('SET_AUTHKEY', data.authKey)
@@ -34,6 +34,7 @@ const user = {
           commit('SET_SESSIONID', data.sessionId)
           setUserInfo(data.userInfo)
           commit('SET_USERINFO', data.userInfo)
+          await dispatch('generateRoutes')
           resolve(data)
         }).catch(error => {
           reject(error)

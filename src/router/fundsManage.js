@@ -11,7 +11,7 @@ export default {
             path: 'rechargeManage',
             name: 'rechargeManage',
             component: () => import('@/views/fundsManage/rechargeManage'),
-            meta: { title: '充值管理', icon: 'tree', menu: true},
+            meta: { title: '充值管理', icon: 'tree', menu: true, perm: 'rechargeManage' },
         },{
             path: 'rechargeCheckDetail',
             name: 'rechargeCheckDetail',
@@ -28,7 +28,7 @@ export default {
             path: 'withdrawManage',
             name: 'withdrawManage',
             component: () => import('@/views/fundsManage/withdrawManage'),
-            meta: { title: '提现管理', icon: 'tree', menu: true },
+            meta: { title: '提现管理', icon: 'tree', menu: true, perm: 'withdrawManage' },
         },{
             path: 'withdrawDispose',
             name: 'withdrawDispose',
