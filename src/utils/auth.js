@@ -1,4 +1,5 @@
 import Cookies from 'js-cookie'
+import storage from 'js-storage'
 
 const AUTHKEY = 'token'
 const SESSIONID = 'sessionId'
@@ -42,11 +43,11 @@ export function removeUserInfo() {
 }
 
 export function getAuthList() {
-    return Cookies.getJSON(AUTHLIST)
+    return storage.sessionStorage.get(AUTHLIST)
 }
 
 export function setAuthList(data) {
-    return Cookies.set(AUTHLIST, data)
+    return storage.sessionStorage.set(AUTHLIST, data)
 }
 
 
