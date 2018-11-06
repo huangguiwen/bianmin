@@ -5,23 +5,23 @@ export default {
     redirect: '/bianMinManage/bianMinInfo',
     name: 'bianMinManage',
     hidden: false,
-    meta: { title: '边民管理', icon: 'example', menu: true },
+    meta: { title: '边民管理', icon: 'example', menu: true, id: 100 },
     children: [
         {
             path: 'bianMinInfo',
             name: 'bianMinInfo',
             component: () => import('@/views/bianMinManage/bianMinInfo'),
-            meta: { title: '边民信息', icon: 'tree', menu: true, perm: 'bianMinInfo' }
+            meta: { title: '边民信息', icon: 'tree', menu: true, perm: 'bianMinInfo', id: 101 }
         },{   
             path: 'bianMinAccount',
             name: 'bianMinAccount',
             component: () => import('@/views/bianMinManage/bianMinAccount'),
-            meta: { title: '边民账户列表', icon: 'tree', menu: true, perm: 'bianMinAccount' }
+            meta: { title: '边民账户列表', icon: 'tree', menu: true, perm: 'bianMinAccount', id: 102 }
         },{   
             path: 'accountOverview',
             name: 'accountOverview',
             component: () => import('@/views/bianMinManage/accountOverview'),
-            meta: { title: '边民账户概览', icon: 'tree', menu: true, perm: 'accountOverview' }
+            meta: { title: '边民账户概览', icon: 'tree', menu: true, perm: 'accountOverview', id: 103 }
         },{   
             path: 'singleAccountDetail',
             name: 'singleAccountDetail',

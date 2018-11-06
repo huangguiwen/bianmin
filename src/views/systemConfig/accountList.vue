@@ -42,6 +42,7 @@
                 <template slot-scope="scope">
                     <el-button type="primary" size="small" @click="editAccount(scope.row)">编辑</el-button>
                     <el-button type="success" size="small" @click="changeStatus(scope.row)">启用</el-button>
+                    <el-button type="primary" size="small" @click="setBianmin(scope.row.id)">分配边民</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -72,16 +73,24 @@
                 <el-button @click="editAccountFlag = false">取 消</el-button> 
             </div>
         </el-dialog>
+
+        <set-bianmin :setBianminFlag="setBianminFlag" @setBianminChange="setBianminChange" :editId="editId"></set-bianmin>
     </div>
 </template>
 
 <script>
 import systemConfig from '@/api/systemConfig'
+import setBianmin from './components/setBianmin'
 export default {
     name: 'accountList',
+    components: {
+        setBianmin
+    },
     data() {
         return {
+            editId:0,
             editAccountFlag: false,
+            setBianminFlag: false,
             isEdit: false,
             rolesList: [],
             dataList: [],
@@ -150,13 +159,13 @@ export default {
             if(this.$refs.ruleForm) {
                 this.$refs.ruleForm.clearValidate()
             }
-            this.ruleForm = Object.assign(this.ruleForm, {
+            this.ruleForm = {
                 username: data.username,
                 phone: data.phone,
                 realname: data.realname,
                 id: data.id,
                 auth_id: data.auth_id
-            })
+            }
             
             this.isEdit = true
         },
@@ -206,26 +215,21 @@ export default {
                 })
             }
         },
+
+        setBianmin(id) {
+            this.editId = id
+            this.setBianminFlag = true
+        },
+        
+        setBianminChange(value) {
+            this.setBianminFlag = value
+            this.getDataList()
+        },
+
         searchData() {
             this.getDataList()
         },
-        // remove() {
-        //     this.$confirm('确定停用姓名为“陈琳”的账号', '提示', {
-        //         confirmButtonText: '确定删除',
-        //         cancelButtonText: '取消',
-        //         type: 'warning'
-        //     }).then(() => {
-        //         this.$message({
-        //             type: 'success',
-        //             message: '删除成功!'
-        //         });
-        //     }).catch(() => {
-        //         this.$message({
-        //             type: 'info',
-        //             message: '已取消删除'
-        //         });          
-        //     });
-        // },
+       
         submitData() {
             if(this.isEdit) {
                 systemConfig.updateDataUser(this.ruleForm).then(res => {

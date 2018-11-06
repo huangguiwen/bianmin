@@ -3,15 +3,15 @@ export default {
     path: '/fundsManage',
     component: Layout,
     redirect: '/fundsManage/rechargeManage',
-    name: 'fundsManage  ',
+    name: 'fundsManage',
     hidden: false,
-    meta: { title: '资金管理', icon: 'example', menu: true },
+    meta: { title: '资金管理', icon: 'example', menu: true, id: 300 },
     children: [
         {
             path: 'rechargeManage',
             name: 'rechargeManage',
             component: () => import('@/views/fundsManage/rechargeManage'),
-            meta: { title: '充值管理', icon: 'tree', menu: true, perm: 'rechargeManage' },
+            meta: { title: '充值管理', icon: 'tree', menu: true, perm: 'rechargeManage', id: 301 },
         },{
             path: 'rechargeCheckDetail',
             name: 'rechargeCheckDetail',
@@ -28,7 +28,7 @@ export default {
             path: 'withdrawManage',
             name: 'withdrawManage',
             component: () => import('@/views/fundsManage/withdrawManage'),
-            meta: { title: '提现管理', icon: 'tree', menu: true, perm: 'withdrawManage' },
+            meta: { title: '提现管理', icon: 'tree', menu: true, perm: 'withdrawManage', id: 302 },
         },{
             path: 'withdrawDispose',
             name: 'withdrawDispose',
@@ -41,6 +41,11 @@ export default {
             hidden: true,
             component: () => import('@/views/fundsManage/withdrawCheckDetail'),
             meta: { title: '提现详情', icon: 'tree' },
+        },{
+            path: 'withdrawManage1',
+            name: 'withdrawManage1',
+            component: () => import('@/views/fundsManage/withdrawManage1'),
+            meta: { title: '提现管理7878', icon: 'tree', menu: true, perm: 'withdrawManage1', id: 303 },
         }
     ]
 }

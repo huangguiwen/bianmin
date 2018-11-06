@@ -40,7 +40,6 @@ export default {
     data() {
         return {
             componentMenuFlag: false,
-            menuId: 0,
             selectedArray: [],
             menuArray: [],
             ruleForm: {
@@ -90,11 +89,10 @@ export default {
         })
         this.menuArray = menuList.map(item => {
             if(item.children && item.children.length > 0) {
-                this.menuId ++
                 return {
                     label: item.meta.title,
                     name: item.name,
-                    id: this.menuId,
+                    id: item.meta.id,
                     children: this.filterChildren(item.children)
                 }
             }
@@ -102,7 +100,6 @@ export default {
     },
     methods: {
         cancel() {
-            
             this.componentMenuFlag = false
         },
         submit() {
@@ -117,11 +114,10 @@ export default {
         // 获取所有可以显示的子菜单
         filterChildren(children) {
             return children.filter(item => item.meta.menu == true).map(item => {
-                this.menuId ++
                 return {
                     label: item.meta.title,
                     name: item.name,
-                    id: this.menuId
+                    id: item.meta.id
                 }
             })
         },

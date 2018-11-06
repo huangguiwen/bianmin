@@ -79,6 +79,33 @@ function editAuth(data) {
     })
 }
 
+// 获取可分配边民列表
+function getAllotList(data) {
+    return request({
+        url: '/admin/bianmins/allotList',
+        method: 'get',
+        params: data
+    })
+}
+
+// 获取管理员已分配的边民
+function getAllotAdmin(data) {
+    return request({
+        url: '/admin/bianmins/allotAdmin',
+        method: 'get',
+        params: data
+    })
+}
+
+// 获取管理员已分配的边民
+function allotBianmin(data) {
+    return request({
+        url: '/admin/users/allotBianmin',
+        method: 'post',
+        data: data
+    })
+}
+
 
 export default {
     getRuleSettingList,
@@ -89,5 +116,8 @@ export default {
     updateDataUser,
     getAuth,
     submitAuth,
-    editAuth
+    editAuth,
+    getAllotList,
+    getAllotAdmin,
+    allotBianmin
 }
